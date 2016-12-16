@@ -6,7 +6,7 @@ class ThreadedConversationStream extends Readable {
 
   isLocked = false
 
-  constructor ({ id }) {
+  constructor (id) {
     super({ objectMode: true })
     this.id = id
   }

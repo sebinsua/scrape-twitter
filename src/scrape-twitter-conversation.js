@@ -7,19 +7,17 @@ const ThreadedConversationStream = require('./lib/threaded-conversation-stream')
 
 const cli = meow(`
   Usage
-    $ scrape-twitter-conversation [<username>] --id=<id>
-
-  Options
-    --id=<id>   Show conversation connected to a tweet id.
+    $ scrape-twitter-conversation <username> <id>
 `, {
   string: [ 'id' ] // It turns out Twitter ids are very large...
 })
 
-if (!cli.flags.id) {
+if (cli.input.length < 2) {
   cli.showHelp()
 } else {
   const username = cli.input[0]
-  const tweets = username ? new ConversationStream(username, cli.flags) : new ThreadedConversationStream(cli.flags)
+  const id = cli.input[1]
+  const tweets = username ? new ConversationStream(username, id) : new ThreadedConversationStream(id)
   pump(tweets, JSONStream.stringify('[\n', ',\n', '\n]\n'), process.stdout, err => {
     if (err != null) {
       if (err.statusCode !== 404) {

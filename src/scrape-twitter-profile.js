@@ -1,7 +1,7 @@
 const meow = require('meow')
 const twitterQuery = require('./lib/twitter-query')
 
-const logger = console.log.bind(console)
+const stringify = JSON.stringify.bind(JSON)
 
 const cli = meow(`
   Usage
@@ -12,7 +12,7 @@ if (cli.input.length === 0) {
   cli.showHelp()
 } else {
   const username = cli.input[0]
-  twitterQuery.getUserProfile(username).then(logger).catch(err => {
+  twitterQuery.getUserProfile(username).then(stringify).catch(err => {
     if (err.statusCode !== 404) {
       console.error(err.message)
       console.error(err.stack)

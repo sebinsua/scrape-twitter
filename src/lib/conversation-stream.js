@@ -6,7 +6,7 @@ class ConversationStream extends Readable {
 
   isLocked = false
 
-  constructor (username, { id }) {
+  constructor (username, id) {
     super({ objectMode: true })
     this.username = username
     this.id = id
