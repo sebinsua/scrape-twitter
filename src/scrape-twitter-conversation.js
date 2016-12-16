@@ -7,7 +7,7 @@ const ThreadedConversationStream = require('./lib/threaded-conversation-stream')
 
 const cli = meow(`
   Usage
-    $ scrape-conversation [<username>] --id=<id>
+    $ scrape-twitter-conversation [<username>] --id=<id>
 
   Options
     --id=<id>   Show conversation connected to a tweet id.

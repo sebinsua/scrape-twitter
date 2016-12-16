@@ -5,7 +5,8 @@
   "author": "Seb Insua <me@sebinsua.com>",
   "bin": {
     "scrape-tweets": "./bin/scrape-tweets.js",
-    "scrape-twitter-profile": "./bin/scrape-twitter-profile.js"
+    "scrape-twitter-profile": "./bin/scrape-twitter-profile.js",
+    "scrape-twitter-conversation": "./bin/scrape-twitter-conversation.js"
   },
   "main": "src",
   "engines": {
