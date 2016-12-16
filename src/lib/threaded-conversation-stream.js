@@ -28,6 +28,7 @@ class ThreadedConversationStream extends Readable {
         }
 
         this.isLocked = false
+        this.push(null)
       })
       .catch(err => this.emit('error', err))
   }
