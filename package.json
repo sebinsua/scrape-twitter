@@ -27,7 +27,7 @@
     }
   },
   "scripts": {
-    "test": "npm run -s lint && npm run -s unit",
+    "test": "npm run -s lint",
     "lint": "standard | snazzy",
     "unit": "ava",
     "build": "rimraf dist && babel src --out-dir dist",
@@ -49,7 +49,6 @@
     "babel-eslint": "^7.1.1",
     "babel-plugin-transform-class-properties": "^6.19.0",
     "babel-preset-env": "^1.1.1",
-    "json-schema": "^0.2.3",
     "rimraf": "^2.5.4",
     "snazzy": "^5.0.0",
     "standard": "^8.6.0",
