@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.2"></a>
+## [0.1.2](https://github.com/sebinsua/scrape-twitter/compare/v0.1.1...v0.1.2) (2016-12-16)
+
+
+### Bug Fixes
+
+* **clis:** interfaces simpler ([97c7ab6](https://github.com/sebinsua/scrape-twitter/commit/97c7ab6))
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/sebinsua/scrape-twitter/compare/v0.1.0...v0.1.1) (2016-12-16)
 
