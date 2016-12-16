@@ -26,15 +26,24 @@ const parseImages = ($, element) => {
   return images
 }
 
-const parseTweet = ($, element) => {
-  const USERNAME_REGEX = /@(\w+)/
+const parseUsernamesFromText = (text) => {
+  const USERNAME_REGEX = /@(\w+)/g
 
+  const toUsernames = []
+  let usernamesMatched
+  while ((usernamesMatched = USERNAME_REGEX.exec(text)) !== null) {
+    toUsernames.push(usernamesMatched[1])
+  }
+
+  return toUsernames
+}
+
+const parseTweet = ($, element) => {
   const username = $(element).attr('data-screen-name')
   const id = $(element).attr('data-item-id')
   const text = parseTweetText($, element)
 
-  const usernamesMatched = USERNAME_REGEX.exec(text) || []
-  const toUsernames = usernamesMatched.slice(1)
+  const toUsernames = parseUsernamesFromText(text)
   const isMarkedAsReply = $(element).attr('data-is-reply-to') === 'true' || $(element).attr('data-has-parent-tweet') === 'true'
   const isReplyTo = isMarkedAsReply || toUsernames.length > 0
   const isPinned = $(element).hasClass('user-pinned')

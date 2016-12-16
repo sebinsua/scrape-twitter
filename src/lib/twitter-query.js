@@ -17,13 +17,20 @@ const getUserTimeline = (username, startingId, { replies = false }) => {
 }
 
 const getUserConversation = (username, id, startingId) => {
-  const url = `https://twitter.com/i/${username}/conversation/803682723416117253`
+  const url = `https://twitter.com/i/${username}/conversation/${id}`
   const options = {
     'include_available_features': '1',
     'include_entities': '1',
-    'max_position': startingId
+    'max_position': 'BRDX76lUOQsBgFbPQzQ5CwCwlLTXZjkLAUCWwrAuOQs' || startingId
   }
   return query(url, options)
+    .then(toCheerio)
+    .then(parser.toTweets)
+}
+
+const getThreadedConversation = (id) => {
+  const url = `https://twitter.com/i/threaded_conversation/${id}`
+  return query(url)
     .then(toCheerio)
     .then(parser.toTweets)
 }
@@ -38,3 +45,4 @@ const getUserProfile = (username) => {
 module.exports.getUserProfile = getUserProfile
 module.exports.getUserTimeline = getUserTimeline
 module.exports.getUserConversation = getUserConversation
+module.exports.getThreadedConversation = getThreadedConversation
