@@ -9,7 +9,7 @@ const cli = meow(`
   Usage
     $ scrape-twitter-conversation <username> <id>
 `, {
-  string: [ 'id' ] // It turns out Twitter ids are very large...
+  string: [ '_' ] // It turns out Twitter ids are very large...
 })
 
 if (cli.input.length < 2) {
