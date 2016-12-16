@@ -1,7 +1,7 @@
 {
   "name": "scrape-twitter",
   "description": "Screen scrape twitter",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Seb Insua <me@sebinsua.com>",
   "bin": {
     "scrape-tweets": "./bin/scrape-tweets.js",
