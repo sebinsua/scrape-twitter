@@ -2,17 +2,16 @@ const Readable = require('readable-stream/readable')
 
 const twitterQuery = require('./twitter-query')
 
-class TweetStream extends Readable {
+class ConversationStream extends Readable {
 
   isLocked = false
 
   _lastReadTweetId = undefined
 
-  constructor (username, { retweets, replies }) {
+  constructor (username, { id }) {
     super({ objectMode: true })
     this.username = username
-    this.retweets = retweets == null ? false : retweets
-    this.replies = replies == null ? false : replies
+    this.id = id
   }
 
   _read () {
@@ -25,14 +24,11 @@ class TweetStream extends Readable {
     }
 
     this.isLocked = true
-    twitterQuery.getUserTimeline(this.username, this._lastReadTweetId, { replies: this.replies })
+    twitterQuery.getUserConversation(this.username, this.id, this._lastReadTweetId)
       .then(tweets => {
         let lastReadTweetId
         for (const tweet of tweets) {
           lastReadTweetId = tweet.id
-          if (this.retweets === false && tweet.isRetweet) {
-            continue // skip retweet
-          }
           this.push(tweet)
         }
 
@@ -57,4 +53,4 @@ class TweetStream extends Readable {
 
 }
 
-module.exports = TweetStream
+module.exports = ConversationStream

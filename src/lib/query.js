@@ -12,6 +12,7 @@ const checkStatus = (response) => {
 }
 
 const toJson = response => response.json()
+const toText = response => response.text()
 
 const toHtml = response => response['items_html'].trim()
 
@@ -23,4 +24,11 @@ const query = (url, options) => {
     .then(toHtml)
 }
 
+const get = (url) => {
+  return fetch(url)
+    .then(checkStatus)
+    .then(toText)
+}
+
 module.exports = query
+module.exports.get = get
