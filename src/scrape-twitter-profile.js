@@ -1,7 +1,7 @@
 const meow = require('meow')
 const twitterQuery = require('./lib/twitter-query')
 
-const stringify = JSON.stringify.bind(JSON)
+const stringify = (v) => console.log(JSON.stringify(v, null, 2))
 
 const cli = meow(`
   Usage
