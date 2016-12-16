@@ -1,0 +1,11 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "current",
+        "browsers": [ "last 2 versions" ]
+      }
+    }]
+  ],
+  "plugins": [ "transform-class-properties" ]
+}

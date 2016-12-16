@@ -1,0 +1,63 @@
+{
+  "name": "scrape-twitter",
+  "description": "Screen scrape twitter",
+  "version": "0.0.1",
+  "author": "Seb Insua <me@sebinsua.com>",
+  "bin": {
+    "scrape-tweets": "./bin/scrape-tweets.js"
+  },
+  "main": "src",
+  "engines": {
+    "node": "^6"
+  },
+  "ava": {
+    "babel": "inherit"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "test"
+    ]
+  },
+  "config": {
+    "ghooks": {
+      "commit-msg": "validate-commit-msg",
+      "pre-push": "npm test"
+    }
+  },
+  "scripts": {
+    "test": "npm run -s lint && npm run -s unit",
+    "lint": "standard | snazzy",
+    "unit": "ava",
+    "build": "rimraf dist && babel src --out-dir dist",
+    "push": "git push --follow-tags origin master",
+    "release": "npm test && npm run -s build && standard-version && npm run -s push && npm publish"
+  },
+  "dependencies": {
+    "JSONStream": "^1.2.1",
+    "cheerio": "^0.22.0",
+    "isomorphic-fetch": "^2.2.1",
+    "meow": "^3.7.0",
+    "pump": "^1.0.1",
+    "query-string": "^4.2.3",
+    "readable-stream": "^2.2.2"
+  },
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-class-properties": "^6.19.0",
+    "babel-preset-env": "^1.1.1",
+    "json-schema": "^0.2.3",
+    "rimraf": "^2.5.4",
+    "snazzy": "^5.0.0",
+    "standard": "^8.6.0",
+    "standard-version": "^3.0.0",
+    "validate-commit-msg": "^2.8.2"
+  },
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebinsua/scrape-twitter.git"
+  }
+}
