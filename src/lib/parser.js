@@ -115,7 +115,8 @@ const toTwitterProfile = $ => {
 }
 
 const toTweets = $ => {
-  return $('.tweet').toArray().map(tweetElement => parseTweet($, tweetElement))
+  const MATCH_TWEETS_ONLY = '.tweet:not(.modal-body)'
+  return $(MATCH_TWEETS_ONLY).toArray().map(tweetElement => parseTweet($, tweetElement))
 }
 
 module.exports.toTwitterProfile = toTwitterProfile

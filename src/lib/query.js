@@ -7,6 +7,7 @@ const checkStatus = (response) => {
   } else {
     const error = new Error(response.statusText)
     error.response = response
+    error.statusCode = response.status
     throw error
   }
 }

@@ -12,5 +12,10 @@ if (cli.input.length === 0) {
   cli.showHelp()
 } else {
   const username = cli.input[0]
-  twitterQuery.getUserProfile(username).then(logger)
+  twitterQuery.getUserProfile(username).then(logger).catch(err => {
+    if (err.statusCode !== 404) {
+      console.error(err.message)
+      console.error(err.stack)
+    }
+  })
 }

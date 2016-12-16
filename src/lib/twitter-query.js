@@ -16,14 +16,9 @@ const getUserTimeline = (username, startingId, { replies = false }) => {
     .then(parser.toTweets)
 }
 
-const getUserConversation = (username, id, startingId) => {
-  const url = `https://twitter.com/i/${username}/conversation/${id}`
-  const options = {
-    'include_available_features': '1',
-    'include_entities': '1',
-    'max_position': 'BRDX76lUOQsBgFbPQzQ5CwCwlLTXZjkLAUCWwrAuOQs' || startingId
-  }
-  return query(url, options)
+const getUserConversation = (username, id) => {
+  const url = `https://twitter.com/${username}/status/${id}`
+  return query.get(url)
     .then(toCheerio)
     .then(parser.toTweets)
 }

@@ -23,8 +23,10 @@ if (cli.input.length === 0) {
   })
   pump(tweets, JSONStream.stringify('[\n', ',\n', '\n]\n'), process.stdout, err => {
     if (err != null) {
-      console.error(err.message)
-      console.error(err.stack)
+      if (err.statusCode !== 404) {
+        console.error(err.message)
+        console.error(err.stack)
+      }
       return process.exit(1)
     }
   })
