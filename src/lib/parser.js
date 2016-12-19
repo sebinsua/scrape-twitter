@@ -42,25 +42,6 @@ const parseUsernamesFromText = (text) => {
 
 const fromUnixEpochToISO8601 = (unixDateString) => (new Date(+unixDateString)).toISOString()
 
-const fromJoinDateToIso8601 = (joinDateString) => {
-  const [ month, year ] = joinDateString.replace('Joined', '').trim().split(' ')
-  const months = {
-    'January': '01',
-    'February': '02',
-    'March': '03',
-    'April': '04',
-    'May': '05',
-    'June': '06',
-    'July': '07',
-    'August': '08',
-    'September': '09',
-    'October': '10',
-    'November': '11',
-    'December': '12'
-  }
-  return `${year}-${months[month]}-01T00:00:00.000Z`
-}
-
 const parseTweet = ($, element) => {
   const username = $(element).attr('data-screen-name')
   const id = $(element).attr('data-item-id')
@@ -121,13 +102,41 @@ const parseTweet = ($, element) => {
 
 const toNumber = (value) => parseInt((value || '').replace(/[^0-9]/g, '')) || 0
 
+const parseBio = ($, element) => {
+  // Replace each emoji image with the actual emoji unicode
+  element.find('img.Emoji').each((i, emoji) => {
+    const alt = $(emoji).attr('alt')
+    return $(emoji).html(alt)
+  })
+  return element.text()
+}
+
+const fromJoinDateToIso8601 = (joinDateString) => {
+  const [ month, year ] = joinDateString.replace('Joined', '').trim().split(' ')
+  const months = {
+    'January': '01',
+    'February': '02',
+    'March': '03',
+    'April': '04',
+    'May': '05',
+    'June': '06',
+    'July': '07',
+    'August': '08',
+    'September': '09',
+    'October': '10',
+    'November': '11',
+    'December': '12'
+  }
+  return `${year}-${months[month]}-01T00:00:00.000Z`
+}
+
 const toTwitterProfile = $ => {
   const $header = $('.ProfileHeaderCard')
   const $nav = $('.ProfileNav')
 
   const name = $header.find('.ProfileHeaderCard-name a').first().text()
   const username = $header.find('.ProfileHeaderCard-screenname > a').first().text().substring(1)
-  const bio = $header.find('.ProfileHeaderCard-bio').first().text()
+  const bio = parseBio($, $header.find('.ProfileHeaderCard-bio').first())
   const joinDate = fromJoinDateToIso8601($header.find('.ProfileHeaderCard-joinDate .ProfileHeaderCard-joinDateText').first().text())
   const tweets = toNumber($nav.find('.ProfileNav-item--tweets .ProfileNav-value').first().text())
   const following = toNumber($nav.find('.ProfileNav-item--following .ProfileNav-value').first().text())
