@@ -10,9 +10,11 @@ const cli = meow(`
     $ scrape-twitter-timeline <username>
 
   Options
-    --with-retweets   Include retweets
-    --with-replies    Include replies
-`)
+    --with-retweets, -t   Include retweets
+    --with-replies,  -p   Include replies
+`, {
+  alias: { t: 'withRetweets', p: 'withReplies' }
+})
 
 if (cli.input.length === 0) {
   cli.showHelp()

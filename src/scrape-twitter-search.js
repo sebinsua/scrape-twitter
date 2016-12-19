@@ -10,10 +10,11 @@ const cli = meow(`
     $ scrape-twitter-search --query <query> --type <type>
 
   Options
-    --query   The query to search for
-    --type    The type of search. For example, 'top' or 'latest'
+    --query, -q   The query to search for
+    --type,  -t   The type of search. For example, 'top' or 'latest'
 `, {
-  default: { type: 'top' }
+  default: { type: 'top' },
+  alias: { q: 'query', t: 'type' }
 })
 
 if ('query' in cli.flags === false) {
