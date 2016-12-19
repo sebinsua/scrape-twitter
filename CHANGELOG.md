@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/sebinsua/scrape-twitter/compare/v0.1.5...v0.2.0) (2016-12-19)
+
+
+### Bug Fixes
+
+* **cli:** twitter conversation cli fixed ([2c6b438](https://github.com/sebinsua/scrape-twitter/commit/2c6b438))
+* **profile:** bio can contain emoji ([b461ad7](https://github.com/sebinsua/scrape-twitter/commit/b461ad7))
+
+
+### Features
+
+* **expose:** expose streams and twitter profile ([0428a28](https://github.com/sebinsua/scrape-twitter/commit/0428a28))
+* **search|list:** search and list functionality exposed ([1d630fb](https://github.com/sebinsua/scrape-twitter/commit/1d630fb))
+
+
+
 <a name="0.1.5"></a>
 ## [0.1.5](https://github.com/sebinsua/scrape-twitter/compare/v0.1.4...v0.1.5) (2016-12-16)
 
