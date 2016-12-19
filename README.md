@@ -29,7 +29,7 @@ $ scrape-twitter list nouswaves list
 For example, a [MOTD-like](https://en.wikipedia.org/wiki/Motd_(Unix)) script might contain:
 
 ```sh
-scrape-tweets afoolswisdom | jq -r 'map(select(.text | contains("knowledge"))) | .[].text' | gshuf -n 1 | terminal-notifier -title "Knowledge (MOTD)"
+scrape-twitter timeline afoolswisdom | jq -r 'map(select(.text | contains("knowledge"))) | .[].text' | gshuf -n 1 | terminal-notifier -title "Knowledge (MOTD)"
 ```
 
 ## Install
