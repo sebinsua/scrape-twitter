@@ -7,7 +7,7 @@ const cliUtils = require('./lib/cli-utils')
 
 const cli = meow(`
   Usage
-    $ scrape-twitter-timeline <username>
+    $ scrape-twitter timeline <username>
 
   Options
     --with-retweets, -t   Include retweets

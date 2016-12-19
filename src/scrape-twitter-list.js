@@ -7,7 +7,7 @@ const cliUtils = require('./lib/cli-utils')
 
 const cli = meow(`
   Usage
-    $ scrape-twitter-list <username> <list>
+    $ scrape-twitter list <username> <list>
 `)
 
 if (cli.input.length < 2) {

@@ -8,7 +8,7 @@ const cliUtils = require('./lib/cli-utils')
 
 const cli = meow(`
   Usage
-    $ scrape-twitter-conversation <username> <id>
+    $ scrape-twitter conversation <username> <id>
 `, {
   string: [ '_' ] // It turns out Twitter ids are very large...
 })

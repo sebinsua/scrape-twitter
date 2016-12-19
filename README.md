@@ -8,19 +8,19 @@ It also exposes both streams and a promise returning function to help accessing 
 ## Example
 
 ```sh
-$ scrape-twitter-profile sebinsua
+$ scrape-twitter profile sebinsua
 # ...
 
-$ scrape-twitter-timeline nouswaves
+$ scrape-twitter timeline nouswaves
 # ...
 
-$ scrape-twitter-conversation ctbeiser 691766715835924484
+$ scrape-twitter conversation ctbeiser 691766715835924484
 # ...
 
-$ scrape-twitter-search --query "from:afoolswisdom motivation" --type latest
+$ scrape-twitter search --query "from:afoolswisdom motivation" --type latest
 # ...
 
-$ scrape-twitter-list nouswaves list
+$ scrape-twitter list nouswaves list
 # ...
 ```
 

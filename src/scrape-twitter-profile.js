@@ -6,7 +6,7 @@ const stringify = (v) => console.log(JSON.stringify(v, null, 2))
 
 const cli = meow(`
   Usage
-    $ scrape-twitter-profile <username>
+    $ scrape-twitter profile <username>
 `)
 
 if (cli.input.length === 0) {

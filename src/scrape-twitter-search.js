@@ -7,7 +7,7 @@ const cliUtils = require('./lib/cli-utils')
 
 const cli = meow(`
   Usage
-    $ scrape-twitter-search --query <query> --type <type>
+    $ scrape-twitter search --query <query> --type <type>
 
   Options
     --query, -q   The query to search for
