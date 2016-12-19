@@ -1,10 +1,13 @@
 const fetch = require('isomorphic-fetch')
 const queryString = require('query-string')
+const debug = require('debug')('scrape-twitter:query')
 
 const checkStatus = (response) => {
   if (response.ok) {
+    debug('response was ok')
     return response
   } else {
+    debug('response was error:', response)
     const error = new Error(response.statusText)
     error.response = response
     error.statusCode = response.status
@@ -16,24 +19,29 @@ const toJson = response => response.json()
 const toText = response => response.text()
 
 const toHtml = response => {
+  let html = null
   if ('items_html' in response) {
-    return response['items_html'].trim()
+    html = response['items_html'].trim()
   } else if ('conversation_html' in response) {
-    return response['conversation_html'].trim()
+    html = response['conversation_html'].trim()
   }
-  return null
+  debug('received html of length:', html.length)
+  return html
 }
 
 const query = (url, options) => {
   const qs = queryString.stringify(options)
-  return fetch(url + (qs.length ? `?${qs}` : ''))
+  const resource = url + (qs.length ? `?${qs}` : '')
+  debug('query on resource:', resource)
+  return fetch(resource)
     .then(checkStatus)
     .then(toJson)
     .then(toHtml)
 }
 
-const get = (url) => {
-  return fetch(url)
+const get = (resource) => {
+  debug('get on resource:', resource)
+  return fetch(resource)
     .then(checkStatus)
     .then(toText)
 }

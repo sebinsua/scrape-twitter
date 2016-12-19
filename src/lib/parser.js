@@ -1,3 +1,5 @@
+const debug = require('debug')('scrape-twitter:parser')
+
 const parseTweetText = ($, element) => {
   const textElement = $(element).find('.tweet-text').first()
   // Replace each emoji image with the actual emoji unicode
@@ -38,22 +40,49 @@ const parseUsernamesFromText = (text) => {
   return toUsernames
 }
 
+const fromUnixEpochToISO8601 = (unixDateString) => (new Date(+unixDateString)).toISOString()
+
+const fromJoinDateToIso8601 = (joinDateString) => {
+  const [ month, year ] = joinDateString.replace('Joined', '').trim().split(' ')
+  const months = {
+    'January': '01',
+    'February': '02',
+    'March': '03',
+    'April': '04',
+    'May': '05',
+    'June': '06',
+    'July': '07',
+    'August': '08',
+    'September': '09',
+    'October': '10',
+    'November': '11',
+    'December': '12'
+  }
+  return `${year}-${months[month]}-01T00:00:00.000Z`
+}
+
 const parseTweet = ($, element) => {
   const username = $(element).attr('data-screen-name')
   const id = $(element).attr('data-item-id')
   const text = parseTweetText($, element)
+  const images = parseImages($, element)
 
   const toUsernames = parseUsernamesFromText(text)
+
+  debug(`${username} tweeted ${id}${toUsernames.length ? ` @ ${toUsernames.join(' ')}` : ''}: ${text}`)
+
   const isMarkedAsReply = $(element).attr('data-is-reply-to') === 'true' || $(element).attr('data-has-parent-tweet') === 'true'
   const isReplyTo = isMarkedAsReply || toUsernames.length > 0
   const isPinned = $(element).hasClass('user-pinned')
   const isRetweet = $(element).find('.js-retweet-text').length !== 0
-  const time = +$(element).find('.js-short-timestamp').first().attr('data-time')
+  const time = fromUnixEpochToISO8601($(element).find('.js-short-timestamp').first().attr('data-time-ms'))
 
   const reply = parseActionCount($, element, 'reply')
   const retweet = parseActionCount($, element, 'retweet')
   const favorite = parseActionCount($, element, 'favorite')
-  const images = parseImages($, element)
+  debug(`tweet ${id} received ${reply} replies`)
+  debug(`tweet ${id} received ${retweet} retweets`)
+  debug(`tweet ${id} received ${favorite} favorites`)
 
   const quotedTweetElement = $(element).find('.QuoteTweet-innerContainer')
   const quotedUsername = quotedTweetElement.attr('data-screen-name')
@@ -61,6 +90,7 @@ const parseTweet = ($, element) => {
   const quotedText = parseTweetText($, quotedTweetElement)
   let quote
   if (quotedTweetElement.length) {
+    debug(`tweet ${id} quotes the tweet ${quotedId} by ${quotedUsername}: ${quotedText}`)
     quote = {
       username: quotedUsername,
       id: quotedId,
@@ -84,6 +114,8 @@ const parseTweet = ($, element) => {
     quote
   }
 
+  debug('tweet found:', tweet)
+
   return tweet
 }
 
@@ -96,13 +128,13 @@ const toTwitterProfile = $ => {
   const name = $header.find('.ProfileHeaderCard-name a').first().text()
   const username = $header.find('.ProfileHeaderCard-screenname > a').first().text().substring(1)
   const bio = $header.find('.ProfileHeaderCard-bio').first().text()
-  const joinDate = $header.find('.ProfileHeaderCard-joinDate .ProfileHeaderCard-joinDateText').first().text().replace('Joined', '').substring(1)
+  const joinDate = fromJoinDateToIso8601($header.find('.ProfileHeaderCard-joinDate .ProfileHeaderCard-joinDateText').first().text())
   const tweets = toNumber($nav.find('.ProfileNav-item--tweets .ProfileNav-value').first().text())
   const following = toNumber($nav.find('.ProfileNav-item--following .ProfileNav-value').first().text())
   const followers = toNumber($nav.find('.ProfileNav-item--followers .ProfileNav-value').first().text())
   const likes = toNumber($nav.find('.ProfileNav-item--favorites .ProfileNav-value').first().text())
 
-  return {
+  const userProfile = {
     username,
     name,
     bio,
@@ -112,6 +144,10 @@ const toTwitterProfile = $ => {
     followers,
     likes
   }
+
+  debug('user profile found:', userProfile)
+
+  return userProfile
 }
 
 const toTweets = $ => {
