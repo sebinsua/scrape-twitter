@@ -6,10 +6,7 @@ const ListStream = require('./lib/list-stream')
 const getUserProfile = require('./lib/twitter-query').getUserProfile
 
 /*
-#### TODO
-
 - [ ] `--count` flag should exist.
-- [ ] Get hashtags from tweets.
 - [ ] Find out the API which Twitter uses and then impersonate the response.
 - [ ] Write integration tests.
  */

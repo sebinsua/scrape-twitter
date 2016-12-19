@@ -29,15 +29,31 @@ const parseImages = ($, element) => {
 }
 
 const parseUsernamesFromText = (text) => {
+  // NOTE: Currently this will match `someText@username@anotherUsername@someOtherUserName`
+  //       but it should not.
   const USERNAME_REGEX = /@(\w+)/g
 
   const toUsernames = []
-  let usernamesMatched
-  while ((usernamesMatched = USERNAME_REGEX.exec(text)) !== null) {
-    toUsernames.push(usernamesMatched[1])
+  let usernameMatched
+  while ((usernameMatched = USERNAME_REGEX.exec(text)) !== null) {
+    toUsernames.push(usernameMatched[1])
   }
 
   return toUsernames
+}
+
+const parseHashtagsFromText = (text) => {
+  // NOTE: Currently this will match `someText#hashtag#anotherHashtag#someOtherHashtag`
+  //       but it should not.
+  const HASHTAG_REGEX = /(#\w+)/g
+
+  const hashtags = []
+  let hashtagMatched
+  while ((hashtagMatched = HASHTAG_REGEX.exec(text)) !== null) {
+    hashtags.push(hashtagMatched[1])
+  }
+
+  return hashtags
 }
 
 const fromUnixEpochToISO8601 = (unixDateString) => (new Date(+unixDateString)).toISOString()
@@ -49,6 +65,7 @@ const parseTweet = ($, element) => {
   const images = parseImages($, element)
 
   const toUsernames = parseUsernamesFromText(text)
+  const hashtags = parseHashtagsFromText(text)
 
   debug(`${username} tweeted ${id}${toUsernames.length ? ` @ ${toUsernames.join(' ')}` : ''}: ${text}`)
 
@@ -88,6 +105,7 @@ const parseTweet = ($, element) => {
     isReplyTo,
     toUsernames,
     text,
+    hashtags,
     images,
     reply,
     retweet,
@@ -143,10 +161,15 @@ const toTwitterProfile = $ => {
   const followers = toNumber($nav.find('.ProfileNav-item--followers .ProfileNav-value').first().text())
   const likes = toNumber($nav.find('.ProfileNav-item--favorites .ProfileNav-value').first().text())
 
+  const usernames = parseUsernamesFromText(bio)
+  const hashtags = parseHashtagsFromText(bio)
+
   const userProfile = {
     username,
     name,
     bio,
+    usernames,
+    hashtags,
     joinDate,
     tweets,
     following,
