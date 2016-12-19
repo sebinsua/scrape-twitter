@@ -38,6 +38,7 @@
   "dependencies": {
     "JSONStream": "^1.2.1",
     "cheerio": "^0.22.0",
+    "debug": "^2.4.5",
     "isomorphic-fetch": "^2.2.1",
     "meow": "^3.7.0",
     "pump": "^1.0.1",
