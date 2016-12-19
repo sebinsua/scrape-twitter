@@ -7,14 +7,14 @@ class TweetStream extends Readable {
 
   isLocked = false
 
-  _lastReadTweetId = undefined
+  _firstReadTweet = undefined
+  _lastReadTweet = undefined
 
-  constructor (username, { retweets, replies }) {
+  constructor (query, type) {
     super({ objectMode: true })
-    this.username = username
-    this.retweets = retweets == null ? false : retweets
-    this.replies = replies == null ? false : replies
-    debug(`TweetStream for ${this.username} created with`, { retweets: this.retweets, replies: this.replies })
+    this.query = query
+    this.type = type === 'latest' ? 'tweets' : 'top'
+    debug(`TweetStream for "${this.query}" and type ${type} created`)
   }
 
   _read () {
@@ -31,16 +31,17 @@ class TweetStream extends Readable {
     this.isLocked = true
     debug('TweetStream is now locked')
 
-    debug(`TweetStream reads timeline${this._lastReadTweetId ? ` from tweet ${this._lastReadTweetId} onwards` : ''}`)
-    twitterQuery.getUserTimeline(this.username, this._lastReadTweetId, { replies: this.replies })
+    debug(`TweetStream queries for tweets outside [ ${this._firstReadTweet}, ..., ${this._lastReadTweet} ]`)
+    const maxPosition = this._firstReadTweet && this._lastReadTweet ? `TWEET-${this._lastReadTweet}-${this._firstReadTweet}` : null
+    twitterQuery.queryTweets(this.query, this.type, maxPosition)
       .then(tweets => {
+        if (!this._firstReadTweet) {
+          this._firstReadTweet = tweets[0] ? tweets[0].id : null
+        }
+
         let lastReadTweetId
         for (const tweet of tweets) {
           lastReadTweetId = tweet.id
-          if (this.retweets === false && tweet.isRetweet) {
-            debug(`tweet ${tweet.id} was skipped as it is a retweet`)
-            continue // Skip retweet.
-          }
 
           this.push(tweet)
         }
@@ -48,7 +49,7 @@ class TweetStream extends Readable {
         // We have to check to see if there are more tweets, by seeing if the
         // last tweet id has been repeated or not.
         const hasZeroTweets = lastReadTweetId === undefined
-        const hasDifferentLastTweet = this._lastReadTweetId !== lastReadTweetId
+        const hasDifferentLastTweet = this._lastReadTweet !== lastReadTweetId
         const hasMoreTweets = !hasZeroTweets && hasDifferentLastTweet
         if (hasMoreTweets === false) {
           debug('TweetStream has no more tweets')
@@ -62,7 +63,7 @@ class TweetStream extends Readable {
         }
 
         debug(`TweetStream sets the last tweet to ${lastReadTweetId}`)
-        this._lastReadTweetId = lastReadTweetId
+        this._lastReadTweet = lastReadTweetId
 
         this.isLocked = false
         debug('TweetStream is now unlocked')

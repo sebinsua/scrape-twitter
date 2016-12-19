@@ -16,6 +16,18 @@ const getUserTimeline = (username, startingId, { replies = false }) => {
     .then(parser.toTweets)
 }
 
+const getUserList = (username, list, startingId) => {
+  const url = `https://twitter.com/${username}/lists/${list}/timeline`
+  const options = {
+    'include_available_features': '1',
+    'include_entities': '1',
+    'max_position': startingId
+  }
+  return query(url, options)
+    .then(toCheerio)
+    .then(parser.toTweets)
+}
+
 const getUserConversation = (username, id) => {
   const url = `https://twitter.com/${username}/status/${id}`
   return query.get(url)
@@ -37,7 +49,27 @@ const getUserProfile = (username) => {
     .then(parser.toTwitterProfile)
 }
 
-module.exports.getUserProfile = getUserProfile
-module.exports.getUserTimeline = getUserTimeline
-module.exports.getUserConversation = getUserConversation
-module.exports.getThreadedConversation = getThreadedConversation
+const queryTweets = (q, type, maxPosition) => {
+  const url = 'https://twitter.com/i/search/timeline'
+  const options = {
+    'vertical': 'default',
+    'src': 'typd',
+    'include_available_features': '1',
+    'include_entities': '1',
+    'f': type,
+    'q': q,
+    'max_position': maxPosition
+  }
+  return query(url, options)
+    .then(toCheerio)
+    .then(parser.toTweets)
+}
+
+module.exports = {
+  getUserProfile,
+  getUserTimeline,
+  getUserList,
+  getUserConversation,
+  getThreadedConversation,
+  queryTweets
+}
