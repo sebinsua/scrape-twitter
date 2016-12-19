@@ -1,7 +1,7 @@
 {
   "name": "scrape-twitter",
   "description": "Access Twitter data without an API key.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Seb Insua <me@sebinsua.com>",
   "bin": {
     "scrape-twitter-timeline": "./bin/scrape-twitter-timeline.js",

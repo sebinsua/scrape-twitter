@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/sebinsua/scrape-twitter/compare/v0.2.1...v0.2.2) (2016-12-19)
+
+
+### Bug Fixes
+
+* **bins:** commands are all accessible via scrape-twitter ([7603af5](https://github.com/sebinsua/scrape-twitter/commit/7603af5))
+* **bins:** commands are all accessible via scrape-twitter ([c5ea2f5](https://github.com/sebinsua/scrape-twitter/commit/c5ea2f5))
+* **bins:** commands are all accessible via scrape-twitter ([002b4be](https://github.com/sebinsua/scrape-twitter/commit/002b4be))
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/sebinsua/scrape-twitter/compare/v0.2.0...v0.2.1) (2016-12-19)
 
