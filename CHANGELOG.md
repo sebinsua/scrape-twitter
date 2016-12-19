@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/sebinsua/scrape-twitter/compare/v0.2.2...v0.2.3) (2016-12-19)
+
+
+### Bug Fixes
+
+* **bin:** core bin added ([50e7f5c](https://github.com/sebinsua/scrape-twitter/commit/50e7f5c))
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/sebinsua/scrape-twitter/compare/v0.2.1...v0.2.2) (2016-12-19)
 
