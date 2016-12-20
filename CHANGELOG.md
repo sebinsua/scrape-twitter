@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/sebinsua/scrape-twitter/compare/v0.2.3...v0.3.0) (2016-12-20)
+
+
+### Features
+
+* **count:** tweet streams can take a count flag ([1f27255](https://github.com/sebinsua/scrape-twitter/commit/1f27255))
+* **profile:** profile image url ([5b0c94f](https://github.com/sebinsua/scrape-twitter/commit/5b0c94f))
+
+
+
 <a name="0.2.3"></a>
 ## [0.2.3](https://github.com/sebinsua/scrape-twitter/compare/v0.2.2...v0.2.3) (2016-12-19)
 
