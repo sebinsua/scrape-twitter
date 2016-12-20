@@ -7,18 +7,25 @@ class ListStream extends Readable {
 
   isLocked = false
 
+  _numberOfTweetsRead = 0
   _lastReadTweetId = undefined
 
-  constructor (username, list) {
+  constructor (username, list, { count }) {
     super({ objectMode: true })
     this.username = username
     this.list = list
+    this.count = count
     debug(`ListStream for ${this.username}/${this.list} created`)
   }
 
   _read () {
     if (this.isLocked) {
       debug('ListStream cannot be read as it is locked')
+      return false
+    }
+    if (!!this.count && this._numberOfTweetsRead >= this.count) {
+      debug('ListStream has read up to the max count')
+      this.push(null)
       return false
     }
     if (this._readableState.destroyed) {
@@ -38,6 +45,11 @@ class ListStream extends Readable {
           lastReadTweetId = tweet.id
 
           this.push(tweet)
+          this._numberOfTweetsRead++
+          if (this._numberOfTweetsRead >= this.count) {
+            debug('ListStream has read up to the max count')
+            break
+          }
         }
 
         // We have to check to see if there are more tweets, by seeing if the

@@ -7,19 +7,26 @@ class TimelineStream extends Readable {
 
   isLocked = false
 
+  _numberOfTweetsRead = 0
   _lastReadTweetId = undefined
 
-  constructor (username, { retweets, replies }) {
+  constructor (username, { retweets, replies, count }) {
     super({ objectMode: true })
     this.username = username
     this.retweets = retweets == null ? false : retweets
     this.replies = replies == null ? false : replies
+    this.count = count
     debug(`TimelineStream for ${this.username} created with`, { retweets: this.retweets, replies: this.replies })
   }
 
   _read () {
     if (this.isLocked) {
       debug('TimelineStream cannot be read as it is locked')
+      return false
+    }
+    if (!!this.count && this._numberOfTweetsRead >= this.count) {
+      debug('TimelineStream has read up to the max count')
+      this.push(null)
       return false
     }
     if (this._readableState.destroyed) {
@@ -43,6 +50,11 @@ class TimelineStream extends Readable {
           }
 
           this.push(tweet)
+          this._numberOfTweetsRead++
+          if (this._numberOfTweetsRead >= this.count) {
+            debug('TimelineStream has read up to the max count')
+            break
+          }
         }
 
         // We have to check to see if there are more tweets, by seeing if the

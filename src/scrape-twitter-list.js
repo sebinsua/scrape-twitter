@@ -7,14 +7,19 @@ const cliUtils = require('./lib/cli-utils')
 
 const cli = meow(`
   Usage
-    $ scrape-twitter list <username> <list>
-`)
+    $ scrape-twitter list <username> <list> [--count=<count>]
+
+  Options
+    --count, -c   Get first N items
+`, {
+  alias: { c: 'count' }
+})
 
 if (cli.input.length < 2) {
   cli.showHelp()
 } else {
   const username = cliUtils.parseUsername(cli.input[0])
   const list = cli.input[1]
-  const tweets = new ListStream(username, list)
+  const tweets = new ListStream(username, list, { count: cli.flags.count })
   pump(tweets, JSONStream.stringify('[\n', ',\n', '\n]\n'), process.stdout, cliUtils.handleError(process.exit.bind(process)))
 }

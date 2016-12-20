@@ -7,19 +7,26 @@ class TweetStream extends Readable {
 
   isLocked = false
 
+  _numberOfTweetsRead = 0
   _firstReadTweet = undefined
   _lastReadTweet = undefined
 
-  constructor (query, type) {
+  constructor (query, type, { count }) {
     super({ objectMode: true })
     this.query = query
     this.type = type === 'latest' ? 'tweets' : 'top'
+    this.count = count
     debug(`TweetStream for "${this.query}" and type ${type} created`)
   }
 
   _read () {
     if (this.isLocked) {
       debug('TweetStream cannot be read as it is locked')
+      return false
+    }
+    if (!!this.count && this._numberOfTweetsRead >= this.count) {
+      debug('TweetStream has read up to the max count')
+      this.push(null)
       return false
     }
     if (this._readableState.destroyed) {
@@ -44,6 +51,11 @@ class TweetStream extends Readable {
           lastReadTweetId = tweet.id
 
           this.push(tweet)
+          this._numberOfTweetsRead++
+          if (this._numberOfTweetsRead >= this.count) {
+            debug('TweetStream has read up to the max count')
+            break
+          }
         }
 
         // We have to check to see if there are more tweets, by seeing if the
