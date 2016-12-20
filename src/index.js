@@ -6,7 +6,6 @@ const ListStream = require('./lib/list-stream')
 const getUserProfile = require('./lib/twitter-query').getUserProfile
 
 /*
-- [ ] Get out a display picture URL for the profile.
 - [ ] `--count` flag should exist for the streams.
 - [ ] Improve newline handling, url handling, and pic handling.
 - [ ] Find out the API structure that Twitter uses and then impersonate the response (to an extent.)
