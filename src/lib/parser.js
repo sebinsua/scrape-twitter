@@ -7,6 +7,8 @@ const parseTweetText = ($, element) => {
     const alt = $(emoji).attr('alt')
     return $(emoji).html(alt)
   })
+  // Remove hidden URLS
+  textElement.find('a.u-hidden').remove()
   return textElement.text()
 }
 
