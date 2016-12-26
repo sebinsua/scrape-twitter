@@ -46,11 +46,11 @@ npm install -g scrape-twitter
 
 ## API
 
-### `new TimelineStream(username: string, { retweets: boolean, replies: boolean })`
+### `new TimelineStream(username: string, { retweets: boolean, replies: boolean, count: ?number })`
 
 Create a `ReadableStream<Tweet>` for the timeline of a `username`.
 
-### `new ConversationStream(username: string, id: string)`
+### `new ConversationStream(username: string, id: string, { count: ?number })`
 
 Create a `ReadableStream<Tweet>` for the conversation that belongs to a `username` and tweet `id`.
 
@@ -58,11 +58,11 @@ Create a `ReadableStream<Tweet>` for the conversation that belongs to a `usernam
 
 Create a `ReadableStream<Tweet>` for the conversation that belongs to a tweet `id`.
 
-### `new TweetStream(query: string, type: 'top' | 'latest')`
+### `new TweetStream(query: string, type: 'top' | 'latest', { count: ?number })`
 
 Create a `ReadableStream<Tweet>` for the `query` and `type`.
 
-### `new ListStream(username: string, list: string)`
+### `new ListStream(username: string, list: string, { count: ?number })`
 
 Create a `ReadableStream<Tweet>` for the `username` and `list`.
 

@@ -174,7 +174,7 @@ const toTwitterProfile = ({ $ }) => {
   const $nav = $('.ProfileNav')
 
   const profileImage = $avatar.find('.ProfileAvatar-image').attr('src')
-  const username = $header.find('.ProfileHeaderCard-screenname > a').first().text().substring(1)
+  const screenName = $header.find('.ProfileHeaderCard-screenname > a').first().text().substring(1)
   const name = $header.find('.ProfileHeaderCard-name a').first().text()
   const bio = parseText($, $header.find('.ProfileHeaderCard-bio').first())
   const joinDate = fromJoinDateToIso8601($header.find('.ProfileHeaderCard-joinDate .ProfileHeaderCard-joinDateText').first().text())
@@ -188,7 +188,7 @@ const toTwitterProfile = ({ $ }) => {
   const urls = parseUrlsFromText(bio)
 
   const userProfile = {
-    username,
+    screenName,
     profileImage,
     name,
     bio,
