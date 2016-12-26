@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/sebinsua/scrape-twitter/compare/v0.3.1...v0.4.0) (2016-12-26)
+
+
+### Bug Fixes
+
+* **conversation:** auto-page conversations ([91148db](https://github.com/sebinsua/scrape-twitter/commit/91148db))
+* **conversations:** id that can be used to further fetch from conversations ([cde7f77](https://github.com/sebinsua/scrape-twitter/commit/cde7f77))
+* **parsers:** unbroke parsers ([b839434](https://github.com/sebinsua/scrape-twitter/commit/b839434))
+
+
+### Features
+
+* **threads:** threaded conversation reply ids picked out ([0c46f73](https://github.com/sebinsua/scrape-twitter/commit/0c46f73))
+
+
+
 <a name="0.3.1"></a>
 ## [0.3.1](https://github.com/sebinsua/scrape-twitter/compare/v0.3.0...v0.3.1) (2016-12-20)
 
