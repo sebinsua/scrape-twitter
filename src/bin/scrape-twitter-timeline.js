@@ -2,8 +2,8 @@ const meow = require('meow')
 
 const JSONStream = require('JSONStream')
 const pump = require('pump')
-const TimelineStream = require('./lib/timeline-stream')
-const cliUtils = require('./lib/cli-utils')
+const TimelineStream = require('../lib/timeline-stream')
+const cliUtils = require('../lib/cli-utils')
 
 const cli = meow(`
   Usage

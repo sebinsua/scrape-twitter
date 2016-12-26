@@ -2,8 +2,8 @@ const meow = require('meow')
 
 const JSONStream = require('JSONStream')
 const pump = require('pump')
-const TweetStream = require('./lib/tweet-stream')
-const cliUtils = require('./lib/cli-utils')
+const TweetStream = require('../lib/tweet-stream')
+const cliUtils = require('../lib/cli-utils')
 
 const cli = meow(`
   Usage

@@ -2,9 +2,9 @@ const meow = require('meow')
 
 const JSONStream = require('JSONStream')
 const pump = require('pump')
-const ConversationStream = require('./lib/conversation-stream')
-const ThreadedConversationStream = require('./lib/threaded-conversation-stream')
-const cliUtils = require('./lib/cli-utils')
+const ConversationStream = require('../lib/conversation-stream')
+const ThreadedConversationStream = require('../lib/threaded-conversation-stream')
+const cliUtils = require('../lib/cli-utils')
 
 const cli = meow(`
   Usage

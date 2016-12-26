@@ -1,6 +1,6 @@
 const meow = require('meow')
-const twitterQuery = require('./lib/twitter-query')
-const cliUtils = require('./lib/cli-utils')
+const twitterQuery = require('../lib/twitter-query')
+const cliUtils = require('../lib/cli-utils')
 
 const stringify = (v) => console.log(JSON.stringify(v, null, 2))
 

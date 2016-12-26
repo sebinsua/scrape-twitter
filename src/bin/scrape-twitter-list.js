@@ -2,8 +2,8 @@ const meow = require('meow')
 
 const JSONStream = require('JSONStream')
 const pump = require('pump')
-const ListStream = require('./lib/list-stream')
-const cliUtils = require('./lib/cli-utils')
+const ListStream = require('../lib/list-stream')
+const cliUtils = require('../lib/cli-utils')
 
 const cli = meow(`
   Usage

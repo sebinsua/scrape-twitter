@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 'use strict'
 
-require('../dist/scrape-twitter-profile')
+require('../dist/bin/scrape-twitter-profile')
