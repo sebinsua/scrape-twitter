@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/sebinsua/scrape-twitter/compare/v0.5.0...v0.6.0) (2016-12-26)
+
+
+### Features
+
+* **conversations:** conversations should pull back their ancestors ([ec3e254](https://github.com/sebinsua/scrape-twitter/commit/ec3e254))
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/sebinsua/scrape-twitter/compare/v0.4.1...v0.5.0) (2016-12-26)
 
