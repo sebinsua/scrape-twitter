@@ -32,9 +32,14 @@ class ConversationStream extends Readable {
     debug('ConversationStream is now locked')
     twitterQuery.getUserConversation(this.username, this.id, this._lastMinPosition)
       .then(tweets => {
-        let lastReadTweetId
+        const lastReadTweetId = tweets.length ? tweets[tweets.length - 1].id : undefined
+        if (this._lastReadTweetId === lastReadTweetId) {
+          this.push(null)
+          this.isLocked = false
+          return
+        }
+
         for (const tweet of tweets) {
-          lastReadTweetId = tweet.id
           // TODO: Use _showMoreTweetsFromConversation to make an extra request for data.
           // delete tweet._showMoreTweetsFromConversation
           this.push(tweet)
