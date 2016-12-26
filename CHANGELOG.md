@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.1"></a>
+## [0.4.1](https://github.com/sebinsua/scrape-twitter/compare/v0.4.0...v0.4.1) (2016-12-26)
+
+
+### Bug Fixes
+
+* **conversations:** fetch extended threaded conversations ([758267a](https://github.com/sebinsua/scrape-twitter/commit/758267a))
+* **conversations:** stop repeating last page ([04eac30](https://github.com/sebinsua/scrape-twitter/commit/04eac30))
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/sebinsua/scrape-twitter/compare/v0.3.1...v0.4.0) (2016-12-26)
 
