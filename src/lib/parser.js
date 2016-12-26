@@ -176,7 +176,7 @@ const fromJoinDateToIso8601 = (joinDateString) => {
   return `${year}-${months[month]}-01T00:00:00.000Z`
 }
 
-const toTwitterProfile = $ => {
+const toTwitterProfile = ({ $ }) => {
   const $avatar = $('.ProfileAvatar')
   const $header = $('.ProfileHeaderCard')
   const $nav = $('.ProfileNav')
@@ -215,7 +215,7 @@ const toTwitterProfile = $ => {
   return userProfile
 }
 
-const toTweets = ([ $ ]) => {
+const toTweets = ({ $ }) => {
   const MATCH_TWEETS_ONLY = '.tweet:not(.modal-body)'
   return $(MATCH_TWEETS_ONLY).toArray().map(tweetElement => parseTweet($, tweetElement))
 }
