@@ -4,15 +4,16 @@ const debug = require('debug')('scrape-twitter:parser')
 
 const flatten = arr => arr.reduce((prev, curr) => prev.concat(curr), [])
 
-const parseTweetText = ($, element) => {
-  const textElement = $(element).find('.tweet-text').first()
+const parseText = ($, textElement) => {
   // Replace each emoji image with the actual emoji unicode
-  textElement.find('img.twitter-emoji').each((i, emoji) => {
+  textElement.find('img.Emoji, img.twitter-emoji').each((i, emoji) => {
     const alt = $(emoji).attr('alt')
     return $(emoji).html(alt)
   })
+
   // Remove hidden URLS
   textElement.find('a.u-hidden').remove()
+
   return textElement.text()
 }
 
@@ -88,7 +89,7 @@ const fromUnixEpochToISO8601 = (unixDateString) => (new Date(+unixDateString)).t
 const parseTweet = ($, element) => {
   const screenName = $(element).attr('data-screen-name')
   const id = $(element).attr('data-item-id')
-  const text = parseTweetText($, element)
+  const text = parseText($, $(element).find('.tweet-text').first())
   const images = parseImages($, element)
 
   const userMentions = parseUsernamesFromText(text)
@@ -112,7 +113,7 @@ const parseTweet = ($, element) => {
   const quotedTweetElement = $(element).find('.QuoteTweet-innerContainer')
   const quotedScreenName = quotedTweetElement.attr('data-screen-name')
   const quotedId = quotedTweetElement.attr('data-item-id')
-  const quotedText = parseTweetText($, quotedTweetElement)
+  const quotedText = parseText($, quotedTweetElement)
   let quote
   if (quotedTweetElement.length) {
     debug(`tweet ${id} quotes the tweet ${quotedId} by ${quotedScreenName}: ${quotedText}`)
@@ -148,15 +149,6 @@ const parseTweet = ($, element) => {
 
 const toNumber = (value) => parseInt((value || '').replace(/[^0-9]/g, '')) || 0
 
-const parseBio = ($, element) => {
-  // Replace each emoji image with the actual emoji unicode
-  element.find('img.Emoji').each((i, emoji) => {
-    const alt = $(emoji).attr('alt')
-    return $(emoji).html(alt)
-  })
-  return element.text()
-}
-
 const fromJoinDateToIso8601 = (joinDateString) => {
   const [ month, year ] = joinDateString.replace('Joined', '').trim().split(' ')
   const months = {
@@ -184,7 +176,7 @@ const toTwitterProfile = ({ $ }) => {
   const profileImage = $avatar.find('.ProfileAvatar-image').attr('src')
   const username = $header.find('.ProfileHeaderCard-screenname > a').first().text().substring(1)
   const name = $header.find('.ProfileHeaderCard-name a').first().text()
-  const bio = parseBio($, $header.find('.ProfileHeaderCard-bio').first())
+  const bio = parseText($, $header.find('.ProfileHeaderCard-bio').first())
   const joinDate = fromJoinDateToIso8601($header.find('.ProfileHeaderCard-joinDate .ProfileHeaderCard-joinDateText').first().text())
   const tweetCount = toNumber($nav.find('.ProfileNav-item--tweets .ProfileNav-value').first().text())
   const followingCount = toNumber($nav.find('.ProfileNav-item--following .ProfileNav-value').first().text())
