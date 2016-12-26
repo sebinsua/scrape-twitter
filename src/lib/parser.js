@@ -113,7 +113,7 @@ const parseTweet = ($, element) => {
   const quotedTweetElement = $(element).find('.QuoteTweet-innerContainer')
   const quotedScreenName = quotedTweetElement.attr('data-screen-name')
   const quotedId = quotedTweetElement.attr('data-item-id')
-  const quotedText = parseText($, quotedTweetElement)
+  const quotedText = parseText($, quotedTweetElement.find('.tweet-text').first())
   let quote
   if (quotedTweetElement.length) {
     debug(`tweet ${id} quotes the tweet ${quotedId} by ${quotedScreenName}: ${quotedText}`)
