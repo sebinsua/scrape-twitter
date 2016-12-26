@@ -64,7 +64,11 @@ class TweetStream extends Readable {
         const hasDifferentLastTweet = this._lastReadTweet !== lastReadTweetId
         const hasMoreTweets = !hasZeroTweets && hasDifferentLastTweet
         if (hasMoreTweets === false) {
-          debug('TweetStream has no more tweets')
+          debug('TweetStream has no more tweets:', {
+            hasZeroTweets,
+            hasDifferentLastTweet,
+            hasMoreTweets
+          })
           this.push(null)
         } else {
           debug('TweetStream has more tweets:', {

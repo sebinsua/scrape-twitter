@@ -7,6 +7,9 @@ class ConversationStream extends Readable {
 
   isLocked = false
 
+  _lastMinPosition = undefined
+  _lastReadTweetId = undefined
+
   constructor (username, id) {
     super({ objectMode: true })
     this.username = username
@@ -27,20 +30,49 @@ class ConversationStream extends Readable {
 
     this.isLocked = true
     debug('ConversationStream is now locked')
-    twitterQuery.getUserConversation(this.username, this.id)
+    twitterQuery.getUserConversation(this.username, this.id, this._lastMinPosition)
       .then(tweets => {
+        let lastReadTweetId
         for (const tweet of tweets) {
+          lastReadTweetId = tweet.id
+          // TODO: Use _showMoreTweetsFromConversation to make an extra request for data.
+          delete tweet._showMoreTweetsFromConversation
           this.push(tweet)
         }
 
-        // TODO: There are two problems:
-        // 1. We are not capturing all of the tweets from the: stream and threaded conversations.
-        //    a. Continue pulling from the stream until it is empty.
-        //    b. Use last tweet id with threaded conversation to get the rest of a conversation.
+        const hasZeroTweets = lastReadTweetId === undefined
+        const hasDifferentLastTweet = this._lastReadTweetId !== lastReadTweetId
+        const hasMoreTweets = !hasZeroTweets && hasDifferentLastTweet
+        if (hasMoreTweets === false) {
+          debug('ConversationStream has no more tweets:', {
+            hasZeroTweets,
+            hasDifferentLastTweet,
+            hasMoreTweets
+          })
+          this.push(null)
+        } else {
+          debug('ConversationStream has more tweets:', {
+            hasZeroTweets,
+            hasDifferentLastTweet,
+            hasMoreTweets
+          })
+        }
+
+        if (tweets.minPosition) {
+          debug(`ConversationStream sets the last min position to ${tweets.minPosition}`)
+          this._lastMinPosition = tweets.minPosition
+        }
+
+        debug(`TimelineStream sets the last tweet to ${lastReadTweetId}`)
+        this._lastReadTweetId = lastReadTweetId
+
         this.isLocked = false
         debug('ConversationStream is now unlocked')
 
-        this.push(null)
+        if (hasMoreTweets) {
+          debug('ConversationStream has more tweets so calls this._read')
+          this._read()
+        }
       })
       .catch(err => this.emit('error', err))
   }

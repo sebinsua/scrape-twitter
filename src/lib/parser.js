@@ -2,6 +2,8 @@ const urlRegex = require('url-regex')
 
 const debug = require('debug')('scrape-twitter:parser')
 
+const flatten = arr => arr.reduce((prev, curr) => prev.concat(curr), [])
+
 const parseTweetText = ($, element) => {
   const textElement = $(element).find('.tweet-text').first()
   // Replace each emoji image with the actual emoji unicode
@@ -213,34 +215,49 @@ const toTwitterProfile = $ => {
   return userProfile
 }
 
-const toTweets = $ => {
+const toTweets = ([ $ ]) => {
   const MATCH_TWEETS_ONLY = '.tweet:not(.modal-body)'
   return $(MATCH_TWEETS_ONLY).toArray().map(tweetElement => parseTweet($, tweetElement))
 }
 
-const toThreadedTweets = id => $ => {
+const toThreadedTweets = id => ({ $, _minPosition }) => {
   // NOTE: This will not pick up ancestors as they do not belong to threaded conversations.
   //       (It will instead pick up only the parent and its threaded tweets.)
-  const flatten = arr => arr.reduce((prev, curr) => prev.concat(curr), [])
-
+  const MATCH_STREAM_CONTAINER = '.stream-container'
   const MATCH_THREADS = '.ThreadedConversation, .ThreadedConversation--loneTweet'
   const MATCH_PERMALINK_TWEET_ONLY = '.permalink-tweet:not(.modal-body)'
+  const MATCH_SHOW_MORE = '.ThreadedConversation-showMore a'
   const MATCH_TWEETS_ONLY = '.tweet:not(.modal-body)'
 
-  const parentTweetElement = $(MATCH_PERMALINK_TWEET_ONLY).get(0)
-  const parentTweet = parseTweet($, parentTweetElement)
+  const streamContainerElement = $(MATCH_STREAM_CONTAINER)
+  const minPosition = _minPosition || streamContainerElement.attr('data-min-position')
 
-  const threadedConversations = $(MATCH_THREADS).toArray().map(threadedConversationElement => {
+  const parentTweetElement = $(MATCH_PERMALINK_TWEET_ONLY).first()
+  const parentTweet = parentTweetElement.length ? parseTweet($, parentTweetElement) : null
+
+  const threadElements = $(MATCH_THREADS).toArray()
+  const threadedConversations = threadElements.map(threadedConversationElement => {
+    const showMoreElement = $(threadedConversationElement).find(MATCH_SHOW_MORE).first()
+    const showMoreId = showMoreElement.attr('href') ? showMoreElement.attr('href').match(/\d+/).pop() : undefined
+    const tweetElements = $(threadedConversationElement).find(MATCH_TWEETS_ONLY).toArray()
+
     let lastTweetId = id
-    return $(threadedConversationElement).find(MATCH_TWEETS_ONLY).toArray().map(tweetElement => {
-      const tweet = { ...parseTweet($, tweetElement), isReplyToId: lastTweetId }
+    let tweets = []
+    tweetElements.forEach((tweetElement, index) => {
+      const _showMoreTweetsFromConversation = index === tweetElements.length - 1 && showMoreId ? showMoreId : undefined
+      const tweet = { ...parseTweet($, tweetElement), isReplyToId: lastTweetId, _showMoreTweetsFromConversation }
+      tweets.push(tweet)
       lastTweetId = tweet.id
-      return tweet
     })
+
+    return tweets
   })
   const childTweets = flatten(threadedConversations)
 
-  return [ parentTweet, ...childTweets ]
+  const tweets = parentTweet ? [ parentTweet, ...childTweets ] : childTweets
+  tweets.minPosition = minPosition
+
+  return tweets
 }
 
 module.exports.toTwitterProfile = toTwitterProfile

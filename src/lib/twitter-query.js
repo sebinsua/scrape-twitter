@@ -2,7 +2,7 @@ const cheerio = require('cheerio')
 const query = require('./query')
 const parser = require('./parser')
 
-const toCheerio = html => cheerio.load(html)
+const toCheerio = ({ html, _minPosition }) => ({ $: cheerio.load(html), _minPosition })
 
 const getUserTimeline = (username, startingId, { replies = false }) => {
   const url = `https://twitter.com/i/profiles/show/${username}/timeline${replies ? '/with_replies' : ''}`
@@ -28,11 +28,23 @@ const getUserList = (username, list, startingId) => {
     .then(parser.toTweets)
 }
 
-const getUserConversation = (username, id) => {
-  const url = `https://twitter.com/${username}/status/${id}`
-  return query.get(url)
-    .then(toCheerio)
-    .then(parser.toThreadedTweets(id))
+const getUserConversation = (username, id, maxPosition) => {
+  if (typeof maxPosition === 'undefined') {
+    const url = `https://twitter.com/${username}/status/${id}`
+    return query.get(url)
+      .then(toCheerio)
+      .then(parser.toThreadedTweets(id))
+  } else {
+    const url = `https://twitter.com/i/${username}/conversation/${id}`
+    const options = {
+      'include_available_features': '1',
+      'include_entities': '1',
+      'max_position': maxPosition
+    }
+    return query(url, options)
+      .then(toCheerio)
+      .then(parser.toThreadedTweets(id))
+  }
 }
 
 const getThreadedConversation = (id) => {
