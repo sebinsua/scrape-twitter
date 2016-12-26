@@ -3,6 +3,8 @@ const debug = require('debug')('scrape-twitter:conversation-stream')
 
 const twitterQuery = require('./twitter-query')
 
+const flatten = arr => arr.reduce((prev, curr) => prev.concat(curr), [])
+
 class ConversationStream extends Readable {
 
   isLocked = false
@@ -32,6 +34,18 @@ class ConversationStream extends Readable {
     debug('ConversationStream is now locked')
     twitterQuery.getUserConversation(this.username, this.id, this._lastMinPosition)
       .then(tweets => {
+        const extendedTweets = tweets.reduce((ets, ct, idx) => {
+          ets.push(ct)
+          if (ct._showMoreTweetsFromConversation) {
+            ets.push(twitterQuery.getThreadedConversation(ct._showMoreTweetsFromConversation))
+            delete ct._showMoreTweetsFromConversation
+          }
+          return ets
+        }, [])
+
+        return Promise.all(extendedTweets).then(flatten)
+      })
+      .then(tweets => {
         const lastReadTweetId = tweets.length ? tweets[tweets.length - 1].id : undefined
         if (this._lastReadTweetId === lastReadTweetId) {
           this.push(null)
@@ -40,8 +54,6 @@ class ConversationStream extends Readable {
         }
 
         for (const tweet of tweets) {
-          // TODO: Use _showMoreTweetsFromConversation to make an extra request for data.
-          // delete tweet._showMoreTweetsFromConversation
           this.push(tweet)
         }
 
