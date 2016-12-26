@@ -33,6 +33,10 @@ class ConversationStream extends Readable {
           this.push(tweet)
         }
 
+        // TODO: There are two problems:
+        // 1. We are not capturing all of the tweets from the: stream and threaded conversations.
+        //    a. Continue pulling from the stream until it is empty.
+        //    b. Use last tweet id with threaded conversation to get the rest of a conversation.
         this.isLocked = false
         debug('ConversationStream is now unlocked')
 

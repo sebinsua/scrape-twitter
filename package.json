@@ -47,7 +47,8 @@
     "meow": "^3.7.0",
     "pump": "^1.0.1",
     "query-string": "^4.2.3",
-    "readable-stream": "^2.2.2"
+    "readable-stream": "^2.2.2",
+    "url-regex": "^4.0.0"
   },
   "devDependencies": {
     "ava": "^0.17.0",

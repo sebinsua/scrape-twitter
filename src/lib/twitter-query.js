@@ -32,14 +32,14 @@ const getUserConversation = (username, id) => {
   const url = `https://twitter.com/${username}/status/${id}`
   return query.get(url)
     .then(toCheerio)
-    .then(parser.toTweets)
+    .then(parser.toThreadedTweets(id))
 }
 
 const getThreadedConversation = (id) => {
   const url = `https://twitter.com/i/threaded_conversation/${id}`
   return query(url)
     .then(toCheerio)
-    .then(parser.toTweets)
+    .then(parser.toThreadedTweets(id))
 }
 
 const getUserProfile = (username) => {
