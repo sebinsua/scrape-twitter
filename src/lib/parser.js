@@ -234,7 +234,7 @@ const toThreadedTweets = id => ({ $, _minPosition }) => {
   })
 
   const parentTweetElement = $(MATCH_PERMALINK_TWEET_ONLY).first()
-  const parentTweet = parentTweetElement.length ? { ...parseTweet($, parentTweetElement), lastTweetId: lastAncestorTweetId } : null
+  const parentTweet = parentTweetElement.length ? { ...parseTweet($, parentTweetElement), isReplyToId: lastAncestorTweetId } : null
 
   const threadElements = $(MATCH_THREADS).toArray()
   const threadedConversations = threadElements.map(threadedConversationElement => {
