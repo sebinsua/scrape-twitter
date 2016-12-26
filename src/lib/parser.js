@@ -186,10 +186,10 @@ const toTwitterProfile = ({ $ }) => {
   const name = $header.find('.ProfileHeaderCard-name a').first().text()
   const bio = parseBio($, $header.find('.ProfileHeaderCard-bio').first())
   const joinDate = fromJoinDateToIso8601($header.find('.ProfileHeaderCard-joinDate .ProfileHeaderCard-joinDateText').first().text())
-  const tweets = toNumber($nav.find('.ProfileNav-item--tweets .ProfileNav-value').first().text())
-  const following = toNumber($nav.find('.ProfileNav-item--following .ProfileNav-value').first().text())
-  const followers = toNumber($nav.find('.ProfileNav-item--followers .ProfileNav-value').first().text())
-  const likes = toNumber($nav.find('.ProfileNav-item--favorites .ProfileNav-value').first().text())
+  const tweetCount = toNumber($nav.find('.ProfileNav-item--tweets .ProfileNav-value').first().text())
+  const followingCount = toNumber($nav.find('.ProfileNav-item--following .ProfileNav-value').first().text())
+  const followerCount = toNumber($nav.find('.ProfileNav-item--followers .ProfileNav-value').first().text())
+  const likeCount = toNumber($nav.find('.ProfileNav-item--favorites .ProfileNav-value').first().text())
 
   const userMentions = parseUsernamesFromText(bio)
   const hashtags = parseHashtagsFromText(bio)
@@ -204,10 +204,10 @@ const toTwitterProfile = ({ $ }) => {
     hashtags,
     urls,
     joinDate,
-    tweets,
-    following,
-    followers,
-    likes
+    tweetCount,
+    followingCount,
+    followerCount,
+    likeCount
   }
 
   debug('user profile found:', userProfile)
