@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.6.2"></a>
+## [0.6.2](https://github.com/sebinsua/scrape-twitter/compare/v0.6.1...v0.6.2) (2016-12-26)
+
+
+### Bug Fixes
+
+* **emoji:** fixed emoji parsing ([f34959a](https://github.com/sebinsua/scrape-twitter/commit/f34959a))
+* **profile:** altered property name ([7d6e6e0](https://github.com/sebinsua/scrape-twitter/commit/7d6e6e0))
+
+
+
 <a name="0.6.1"></a>
 ## [0.6.1](https://github.com/sebinsua/scrape-twitter/compare/v0.6.0...v0.6.1) (2016-12-26)
 
