@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.6.5"></a>
+## [0.6.5](https://github.com/sebinsua/scrape-twitter/compare/v0.6.4...v0.6.5) (2016-12-26)
+
+
+### Bug Fixes
+
+* **tweet:** fixed wrong property name ([6236ea2](https://github.com/sebinsua/scrape-twitter/commit/6236ea2))
+
+
+
 <a name="0.6.4"></a>
 ## [0.6.4](https://github.com/sebinsua/scrape-twitter/compare/v0.6.3...v0.6.4) (2016-12-26)
 
