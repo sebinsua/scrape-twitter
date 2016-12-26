@@ -16,7 +16,7 @@ class TimelineStream extends Readable {
     this.retweets = retweets == null ? false : retweets
     this.replies = replies == null ? false : replies
     this.count = count
-    debug(`TimelineStream for ${this.username} created with`, { retweets: this.retweets, replies: this.replies })
+    debug(`TimelineStream for ${this.username} created with`, { retweets: this.retweets, replies: this.replies, count: this.count })
   }
 
   _read () {

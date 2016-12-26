@@ -7,7 +7,7 @@ const cliUtils = require('./lib/cli-utils')
 
 const cli = meow(`
   Usage
-    $ scrape-twitter list <username> <list> [--count=<count>]
+    $ scrape-twitter list [--count=<count>] <username> <list>
 
   Options
     --count, -c   Get first N items

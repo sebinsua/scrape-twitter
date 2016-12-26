@@ -7,15 +7,23 @@ class ThreadedConversationStream extends Readable {
 
   isLocked = false
 
-  constructor (id) {
+  _numberOfTweetsRead = 0
+
+  constructor (id, { count }) {
     super({ objectMode: true })
     this.id = id
+    this.count = count
     debug(`ThreadedConversationStream for ${this.id}`)
   }
 
   _read () {
     if (this.isLocked) {
       debug('ThreadedConversationStream cannot be read as it is locked')
+      return false
+    }
+    if (!!this.count && this._numberOfTweetsRead >= this.count) {
+      debug('ThreadedConversationStream has read up to the max count')
+      this.push(null)
       return false
     }
     if (this._readableState.destroyed) {
@@ -30,6 +38,11 @@ class ThreadedConversationStream extends Readable {
       .then(tweets => {
         for (const tweet of tweets) {
           this.push(tweet)
+          this._numberOfTweetsRead++
+          if (this._numberOfTweetsRead >= this.count) {
+            debug('ThreadedConversationStream has read up to the max count')
+            break
+          }
         }
 
         this.isLocked = false

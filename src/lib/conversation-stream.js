@@ -9,19 +9,26 @@ class ConversationStream extends Readable {
 
   isLocked = false
 
+  _numberOfTweetsRead = 0
   _lastMinPosition = undefined
   _lastReadTweetId = undefined
 
-  constructor (username, id) {
+  constructor (username, id, { count }) {
     super({ objectMode: true })
     this.username = username
     this.id = id
+    this.count = count
     debug(`ConversationStream for ${this.username} and ${this.id}`)
   }
 
   _read () {
     if (this.isLocked) {
       debug('ConversationStream cannot be read as it is locked')
+      return false
+    }
+    if (!!this.count && this._numberOfTweetsRead >= this.count) {
+      debug('ConversationStream has read up to the max count')
+      this.push(null)
       return false
     }
     if (this._readableState.destroyed) {
@@ -55,6 +62,11 @@ class ConversationStream extends Readable {
 
         for (const tweet of tweets) {
           this.push(tweet)
+          this._numberOfTweetsRead++
+          if (this._numberOfTweetsRead >= this.count) {
+            debug('ConversationStream has read up to the max count')
+            break
+          }
         }
 
         const hasZeroTweets = lastReadTweetId === undefined

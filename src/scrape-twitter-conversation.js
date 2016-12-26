@@ -8,9 +8,13 @@ const cliUtils = require('./lib/cli-utils')
 
 const cli = meow(`
   Usage
-    $ scrape-twitter conversation <username> <id>
+    $ scrape-twitter conversation [--count=<count>] <username> <id>
+
+  Options
+    --count, -c   Get first N items
 `, {
-  string: [ '_' ] // It turns out Twitter ids are very large...
+  string: [ '_' ], // It turns out Twitter ids are very large...
+  alias: { c: 'count' }
 })
 
 if (cli.input.length === 0) {
@@ -20,10 +24,10 @@ if (cli.input.length === 0) {
   if (cli.input.length >= 2) {
     const username = cliUtils.parseUsername(cli.input[0])
     const id = cli.input[1]
-    tweets = new ConversationStream(username, id)
+    tweets = new ConversationStream(username, id, { count: cli.flags.count })
   } else {
     const id = cli.input[0]
-    tweets = new ThreadedConversationStream(id)
+    tweets = new ThreadedConversationStream(id, { count: cli.flags.count })
   }
   pump(tweets, JSONStream.stringify('[\n', ',\n', '\n]\n'), process.stdout, cliUtils.handleError(process.exit.bind(process)))
 }
