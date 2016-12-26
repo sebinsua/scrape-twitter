@@ -36,7 +36,7 @@ class ConversationStream extends Readable {
         for (const tweet of tweets) {
           lastReadTweetId = tweet.id
           // TODO: Use _showMoreTweetsFromConversation to make an extra request for data.
-          delete tweet._showMoreTweetsFromConversation
+          // delete tweet._showMoreTweetsFromConversation
           this.push(tweet)
         }
 
