@@ -221,16 +221,25 @@ const toTweets = ({ $ }) => {
 }
 
 const toThreadedTweets = id => ({ $, _minPosition }) => {
-  // NOTE: This will not pick up ancestors as they do not belong to threaded conversations.
-  //       (It will instead pick up only the parent and its threaded tweets.)
   const MATCH_STREAM_CONTAINER = '.stream-container'
-  const MATCH_THREADS = '.ThreadedConversation, .ThreadedConversation--loneTweet'
+  const MATCH_ANCESTOR_TWEETS_ONLY = '.permalink-ancestor-tweet'
   const MATCH_PERMALINK_TWEET_ONLY = '.permalink-tweet:not(.modal-body)'
+  const MATCH_THREADS = '.ThreadedConversation, .ThreadedConversation--loneTweet'
   const MATCH_SHOW_MORE = '.ThreadedConversation-showMore a'
   const MATCH_TWEETS_ONLY = '.tweet:not(.modal-body)'
 
   const streamContainerElement = $(MATCH_STREAM_CONTAINER)
   const minPosition = _minPosition || streamContainerElement.attr('data-min-position')
+
+  const ancestorTweetElements = $(MATCH_ANCESTOR_TWEETS_ONLY).toArray()
+
+  let lastAncestorTweetId
+  const ancestorTweets = []
+  ancestorTweetElements.forEach((tweetElement, index) => {
+    const tweet = { ...parseTweet($, tweetElement), isReplyToId: lastAncestorTweetId }
+    ancestorTweets.push(tweet)
+    lastAncestorTweetId = tweet.id
+  })
 
   const parentTweetElement = $(MATCH_PERMALINK_TWEET_ONLY).first()
   const parentTweet = parentTweetElement.length ? parseTweet($, parentTweetElement) : null
@@ -254,7 +263,7 @@ const toThreadedTweets = id => ({ $, _minPosition }) => {
   })
   const childTweets = flatten(threadedConversations)
 
-  const tweets = parentTweet ? [ parentTweet, ...childTweets ] : childTweets
+  const tweets = parentTweet ? [ ...ancestorTweets, parentTweet, ...childTweets ] : childTweets
   tweets.minPosition = minPosition
 
   return tweets
