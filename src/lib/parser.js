@@ -87,14 +87,16 @@ const parseUrlsFromText = (text) => {
 const fromUnixEpochToISO8601 = (unixDateString) => (new Date(+unixDateString)).toISOString()
 
 const parseTweet = ($, element) => {
+  const _untouchedText = $(element).find('.tweet-text').first().text()
+
   const screenName = $(element).attr('data-screen-name')
   const id = $(element).attr('data-item-id')
   const text = parseText($, $(element).find('.tweet-text').first())
   const images = parseImages($, element)
 
-  const userMentions = parseUsernamesFromText(text)
-  const hashtags = parseHashtagsFromText(text)
-  const urls = parseUrlsFromText(text)
+  const userMentions = parseUsernamesFromText(_untouchedText)
+  const hashtags = parseHashtagsFromText(_untouchedText)
+  const urls = parseUrlsFromText(_untouchedText)
 
   debug(`${screenName} tweeted ${id}${userMentions.length ? ` @ ${userMentions.join(' ')}` : ''}: ${text}`)
 
@@ -177,8 +179,10 @@ const toTwitterProfile = ({ $ }) => {
 
   const profileImage = $avatar.find('.ProfileAvatar-image').attr('src')
   const screenName = $header.find('.ProfileHeaderCard-screenname > a').first().text().substring(1)
-  const name = $header.find('.ProfileHeaderCard-name a').first().text()
+  const name = parseText($, $header.find('.ProfileHeaderCard-name a').first())
   const bio = parseText($, $header.find('.ProfileHeaderCard-bio').first())
+  const location = $header.find('.ProfileHeaderCard-locationText').first().text().trim()
+  const url = $header.find('.ProfileHeaderCard-urlText a').first().attr('title')
   const joinDate = fromJoinDateToIso8601($header.find('.ProfileHeaderCard-joinDate .ProfileHeaderCard-joinDateText').first().text())
   const tweetCount = toNumber($nav.find('.ProfileNav-item--tweets .ProfileNav-value').first().text())
   const followingCount = toNumber($nav.find('.ProfileNav-item--following .ProfileNav-value').first().text())
@@ -197,6 +201,8 @@ const toTwitterProfile = ({ $ }) => {
     userMentions,
     hashtags,
     urls,
+    location,
+    url,
     joinDate,
     tweetCount,
     followingCount,

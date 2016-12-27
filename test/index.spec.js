@@ -87,7 +87,18 @@ test('ConversationStream should emit a particular set of tweets', () => {
 })
 
 test('TweetStream should emit a particular set of tweets', () => {
-  const expectedTweetIds = ['453896154439499776', '448460333808877568', '444111658508898304', '443801915756138497', '443749290717241344', '443683376764317696', '443077086786633728', '442030176873238528', '441937334221950976', '441871397091291136']
+  const expectedTweetIds = [
+    '453896154439499776',
+    '448460333808877568',
+    '444111658508898304',
+    '443801915756138497',
+    '443749290717241344',
+    '443683376764317696',
+    '443077086786633728',
+    '442030176873238528',
+    '441937334221950976',
+    '441871397091291136'
+  ]
   const expectedTweet = {
     id: '453896154439499776',
     screenName: 'bemomentum',
@@ -98,7 +109,7 @@ test('TweetStream should emit a particular set of tweets', () => {
     isRetweet: false,
     userMentions: [],
     urls: [
-      { indices: [ 76, 98 ], url: 'http://buff.ly/1qq7VRw' }
+      { indices: [ 75, 97 ], url: 'http://buff.ly/1qq7VRw' }
     ],
     hashtags: [],
     images: [],
@@ -146,6 +157,8 @@ test('getUserProfile() should return my account', () => {
     name: 'Seb Insua',
     profileImage: 'https://pbs.twimg.com/profile_images/643854442362720256/nSrJUpet_400x400.png',
     bio: 'musing → @nouswaves',
+    location: 'London, England',
+    url: 'http://sebinsua.com',
     joinDate: '2015-09-01T00:00:00.000Z',
     urls: [],
     hashtags: [],
