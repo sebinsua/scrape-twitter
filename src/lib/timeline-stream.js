@@ -10,7 +10,7 @@ class TimelineStream extends Readable {
   _numberOfTweetsRead = 0
   _lastReadTweetId = undefined
 
-  constructor (username, { retweets, replies, count }) {
+  constructor (username, { retweets, replies, count } = {}) {
     super({ objectMode: true })
     this.username = username
     this.retweets = retweets == null ? false : retweets

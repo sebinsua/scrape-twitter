@@ -13,7 +13,7 @@ class ConversationStream extends Readable {
   _lastMinPosition = undefined
   _lastReadTweetId = undefined
 
-  constructor (username, id, { count }) {
+  constructor (username, id, { count } = {}) {
     super({ objectMode: true })
     this.username = username
     this.id = id

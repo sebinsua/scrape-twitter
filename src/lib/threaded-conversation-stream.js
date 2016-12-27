@@ -9,7 +9,7 @@ class ThreadedConversationStream extends Readable {
 
   _numberOfTweetsRead = 0
 
-  constructor (id, { count }) {
+  constructor (id, { count } = {}) {
     super({ objectMode: true })
     this.id = id
     this.count = count

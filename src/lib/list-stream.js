@@ -10,7 +10,7 @@ class ListStream extends Readable {
   _numberOfTweetsRead = 0
   _lastReadTweetId = undefined
 
-  constructor (username, list, { count }) {
+  constructor (username, list, { count } = {}) {
     super({ objectMode: true })
     this.username = username
     this.list = list

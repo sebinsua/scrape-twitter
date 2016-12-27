@@ -11,7 +11,7 @@ class TweetStream extends Readable {
   _firstReadTweet = undefined
   _lastReadTweet = undefined
 
-  constructor (query, type, { count }) {
+  constructor (query, type, { count } = {}) {
     super({ objectMode: true })
     this.query = query
     this.type = type === 'latest' ? 'tweets' : 'top'
