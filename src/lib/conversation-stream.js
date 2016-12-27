@@ -42,11 +42,14 @@ class ConversationStream extends Readable {
     twitterQuery.getUserConversation(this.username, this.id, this._lastMinPosition)
       .then(tweets => {
         const extendedTweets = tweets.reduce((ets, ct, idx) => {
+          const _showMoreTweetsFromConversation = ct._showMoreTweetsFromConversation
+          delete ct._showMoreTweetsFromConversation
+
           ets.push(ct)
-          if (ct._showMoreTweetsFromConversation) {
-            ets.push(twitterQuery.getThreadedConversation(ct._showMoreTweetsFromConversation))
-            delete ct._showMoreTweetsFromConversation
+          if (_showMoreTweetsFromConversation) {
+            ets.push(twitterQuery.getThreadedConversation(_showMoreTweetsFromConversation))
           }
+
           return ets
         }, [])
 

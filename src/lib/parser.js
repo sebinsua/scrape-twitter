@@ -138,8 +138,10 @@ const parseTweet = ($, element) => {
     urls,
     replyCount,
     retweetCount,
-    favoriteCount,
-    quote
+    favoriteCount
+  }
+  if (quote) {
+    tweet.quote = quote
   }
 
   debug('tweet found:', tweet)
