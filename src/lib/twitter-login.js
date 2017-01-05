@@ -42,7 +42,7 @@ const checkForKdt = (previousKdt) => (response) => {
   const cookies = (response.headers.getAll('Set-Cookie') || []).join(' ')
   const [ , kdt ] = cookies.match(/kdt=([\w0-9]*);/) || []
   debug(`found the TWITTER_KDT ${kdt}`)
-  if (previousKdt !== kdt) {
+  if (kdt && previousKdt !== kdt) {
     console.log(`Please ensure that the environment variable TWITTER_KDT is set with ${kdt}`)
     console.log()
     console.log(`Environment variables can be set within the dotenv file: ${SCRAPE_TWITTER_CONFIG}`)
@@ -63,7 +63,6 @@ const loginWithAuthToken = (TWITTER_USERNAME, TWITTER_PASSWORD, TWITTER_KDT) => 
       },
       body: formData
     })
-    .then(checkForKdt(TWITTER_KDT))
     .then(response => {
       const location = response.headers.get('location') || ''
       if (location.includes('error')) {
@@ -71,7 +70,9 @@ const loginWithAuthToken = (TWITTER_USERNAME, TWITTER_PASSWORD, TWITTER_KDT) => 
         throw new Error(`Could not login with ${TWITTER_USERNAME} and the password supplied`)
       }
       return response
-    }).then((response) => {
+    })
+    .then(checkForKdt(TWITTER_KDT))
+    .then((response) => {
       debug(`logged in using ${TWITTER_USERNAME}`)
       return response
     })

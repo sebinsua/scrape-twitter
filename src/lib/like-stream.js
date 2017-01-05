@@ -85,9 +85,8 @@ class LikeStream extends Readable {
             debug('LikeStream has more tweets so calls this._read')
             this._read()
           }
-        })
-        .catch(err => this.emit('error', err))
-    )
+        }).catch(err => this.emit('error', err))
+    ).catch(err => this.emit('error', err))
   }
 
 }
