@@ -1,23 +1,16 @@
 const meow = require('meow')
-const expandHome = require('expand-home-dir')
 
 const JSONStream = require('JSONStream')
 const pump = require('pump')
 const LikeStream = require('../lib/like-stream')
 const cliUtils = require('../lib/cli-utils')
 
-const scrapeTwitterConfig = expandHome('~/.scrape-twitter')
-require('dotenv').config({ path: scrapeTwitterConfig })
-const env = {
-  SCRAPE_TWITTER_CONFIG: scrapeTwitterConfig,
-  TWITTER_USERNAME: process.env.TWITTER_USERNAME,
-  TWITTER_PASSWORD: process.env.TWITTER_PASSWORD,
-  TWITTER_KDT: process.env.TWITTER_KDT // used to determine whether a new device is logging in
-}
+const SCRAPE_TWITTER_CONFIG = cliUtils.SCRAPE_TWITTER_CONFIG
+const env = cliUtils.getEnv()
 
 const cli = meow(`
   Usage
-    $ scrape-twitter likes [--count=<count>] <username>
+    $ TWITTER_USERNAME=jack TWITTER_PASSWORD=p4ssw0rd scrape-twitter likes [--count=<count>] <username>
 
   Options
     --count,         -c   Get first N items
@@ -27,6 +20,11 @@ const cli = meow(`
 
 if (cli.input.length === 0) {
   cli.showHelp()
+} else if (!env.TWITTER_USERNAME || !env.TWITTER_PASSWORD) {
+  console.log('Please ensure that the environment variables TWITTER_USERNAME and TWITTER_PASSWORD are set.')
+  console.log()
+  console.log(`Environment variables can be set within the dotenv file: ${SCRAPE_TWITTER_CONFIG}`)
+  process.exit(1)
 } else {
   const username = cliUtils.parseUsername(cli.input[0])
   const tweets = new LikeStream(username, {

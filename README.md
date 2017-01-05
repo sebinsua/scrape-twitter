@@ -9,7 +9,7 @@ It also exposes both streams and a promise returning function to help accessing 
 
 - [x] Get Twitter data without being required to configure an API key.
 - [x] Twitter can't constrain access as easily as they can to an API or an individual API key. Any constraints introduced would apply to their public site. A scraper can be fixed; you are no longer beholden to Twitter.
-- [x] Grab timelines, whole conversations, profiles, etc.
+- [x] Grab timelines, whole conversations, profiles, likes, etc.
 - [x] Automatically pages to fetch all tweets.
 - [x] Provides metadata on how tweet replies are linked together. *e.g. `isReplyToId`*
 
@@ -30,6 +30,8 @@ $ scrape-twitter timeline nouswaves
 ```
 
 ### Get likes
+
+This command requires a valid login. It will check for the following environment variables: `TWITTER_USERNAME`, `TWITTER_PASSWORD`, `TWITTER_KDT`. But can also pick these up from a [`dotenv`](https://github.com/motdotla/dotenv) file at the path `~/.scrape-twitter`. The first time you login you will be asked to store the `TWITTER_KDT` - this is used by Twitter to recognise your device.
 
 ```sh
 $ scrape-twitter likes sebinsua
