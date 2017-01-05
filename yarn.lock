@@ -1349,6 +1349,10 @@ dot-prop@^3.0.0:
   dependencies:
     is-obj "^1.0.0"
 
+dotenv@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-2.0.0.tgz#bd759c357aaa70365e01c96b7b0bec08a6e0d949"
+
 ecc-jsbn@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
@@ -1389,6 +1393,10 @@ es5-ext@^0.10.7, es5-ext@^0.10.8, es5-ext@~0.10.11, es5-ext@~0.10.2, es5-ext@~0.
   dependencies:
     es6-iterator "2"
     es6-symbol "~3.1"
+
+es6-denodeify@^0.1.1:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/es6-denodeify/-/es6-denodeify-0.1.5.tgz#31d4d5fe9c5503e125460439310e16a2a3f39c1f"
 
 es6-iterator@2:
   version "2.0.0"
@@ -1593,6 +1601,10 @@ expand-brackets@^0.1.4:
   dependencies:
     is-posix-bracket "^0.1.0"
 
+expand-home-dir@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/expand-home-dir/-/expand-home-dir-0.0.3.tgz#72de8a0486cc28a3bbd704635398825b5b62827d"
+
 expand-range@^1.8.1:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/expand-range/-/expand-range-1.8.2.tgz#a299effd335fe2721ebae8e257ec79644fc85337"
@@ -1622,6 +1634,13 @@ fb-watchman@^1.8.0, fb-watchman@^1.9.0:
   resolved "https://registry.yarnpkg.com/fb-watchman/-/fb-watchman-1.9.0.tgz#6f268f1f347a6b3c875d1e89da7e1ed79adfc0ec"
   dependencies:
     bser "^1.0.2"
+
+fetch-cookie@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/fetch-cookie/-/fetch-cookie-0.2.0.tgz#c64385ccc3f6dffddbc10b214b9a23cf36a2b5c9"
+  dependencies:
+    es6-denodeify "^0.1.1"
+    tough-cookie "^2.3.1"
 
 figures@^1.3.5, figures@^1.5.0:
   version "1.7.0"
