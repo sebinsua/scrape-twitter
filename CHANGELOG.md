@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/sebinsua/scrape-twitter/compare/v0.6.8...v0.7.0) (2017-01-05)
+
+
+### Bug Fixes
+
+* **likes:** better description of usage ([6be8030](https://github.com/sebinsua/scrape-twitter/commit/6be8030))
+
+
+### Features
+
+* **likes:** get twitter likes ([5583bf4](https://github.com/sebinsua/scrape-twitter/commit/5583bf4))
+
+
+
 <a name="0.6.8"></a>
 ## [0.6.8](https://github.com/sebinsua/scrape-twitter/compare/v0.6.7...v0.6.8) (2016-12-27)
 
