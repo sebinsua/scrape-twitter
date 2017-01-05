@@ -6,6 +6,7 @@
   "bin": {
     "scrape-twitter": "./bin/scrape-twitter.js",
     "scrape-twitter-timeline": "./bin/scrape-twitter-timeline.js",
+    "scrape-twitter-likes": "./bin/scrape-twitter-likes.js",
     "scrape-twitter-profile": "./bin/scrape-twitter-profile.js",
     "scrape-twitter-list": "./bin/scrape-twitter-list.js",
     "scrape-twitter-conversation": "./bin/scrape-twitter-conversation.js",
