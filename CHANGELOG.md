@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.2"></a>
+## [0.7.2](https://github.com/sebinsua/scrape-twitter/compare/v0.7.1...v0.7.2) (2017-01-05)
+
+
+### Bug Fixes
+
+* **env:** touch env file automatically ([626639b](https://github.com/sebinsua/scrape-twitter/commit/626639b))
+
+
+
 <a name="0.7.1"></a>
 ## [0.7.1](https://github.com/sebinsua/scrape-twitter/compare/v0.7.0...v0.7.1) (2017-01-05)
 
