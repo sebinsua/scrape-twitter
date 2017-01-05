@@ -39,19 +39,19 @@ const toHtml = response => {
   return { html, _minPosition: minPosition }
 }
 
-const query = (url, options) => {
+const query = (url, options, fetcher = fetch) => {
   const qs = queryString.stringify(options)
   const resource = url + (qs.length ? `?${qs}` : '')
   debug('query on resource:', resource)
-  return fetch(resource)
+  return fetcher(resource)
     .then(checkStatus)
     .then(toJson)
     .then(toHtml)
 }
 
-const get = (resource) => {
+const get = (resource, fetcher = fetch) => {
   debug('get on resource:', resource)
-  return fetch(resource)
+  return fetcher(resource)
     .then(checkStatus)
     .then(toText)
     .then(html => ({ html }))

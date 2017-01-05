@@ -1,6 +1,7 @@
 const cheerio = require('cheerio')
 const query = require('./query')
 const parser = require('./parser')
+const fetchWithCookie = require('./twitter-login').fetch
 
 const toCheerio = ({ html, _minPosition }) => ({ $: cheerio.load(html), _minPosition })
 
@@ -12,6 +13,18 @@ const getUserTimeline = (username, startingId, { replies = false }) => {
     'max_position': startingId
   }
   return query(url, options)
+    .then(toCheerio)
+    .then(parser.toTweets)
+}
+
+const getUserLikes = (username, startingId) => {
+  const url = `https://twitter.com/${username}/likes/timeline`
+  const options = {
+    'include_available_features': '1',
+    'include_entities': '1',
+    'max_position': startingId
+  }
+  return query(url, options, fetchWithCookie)
     .then(toCheerio)
     .then(parser.toTweets)
 }
@@ -80,6 +93,7 @@ const queryTweets = (q, type, maxPosition) => {
 module.exports = {
   getUserProfile,
   getUserTimeline,
+  getUserLikes,
   getUserList,
   getUserConversation,
   getThreadedConversation,

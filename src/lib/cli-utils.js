@@ -1,3 +1,7 @@
+const expandHome = require('expand-home-dir')
+
+const SCRAPE_TWITTER_CONFIG = expandHome('~/.scrape-twitter')
+
 const parseUsername = username => (username || '').replace('@', '')
 
 const handleError = exit => err => {
@@ -12,7 +16,20 @@ const handleError = exit => err => {
   }
 }
 
+const getEnv = () => {
+  require('dotenv').config({ path: SCRAPE_TWITTER_CONFIG })
+  const env = {
+    SCRAPE_TWITTER_CONFIG: SCRAPE_TWITTER_CONFIG,
+    TWITTER_USERNAME: process.env.TWITTER_USERNAME,
+    TWITTER_PASSWORD: process.env.TWITTER_PASSWORD,
+    TWITTER_KDT: process.env.TWITTER_KDT // used to determine whether a new device is logging in
+  }
+  return env
+}
+
 module.exports = {
+  SCRAPE_TWITTER_CONFIG,
+  getEnv,
   parseUsername,
   handleError
 }
