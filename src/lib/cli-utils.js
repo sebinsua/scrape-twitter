@@ -1,6 +1,9 @@
 const expandHome = require('expand-home-dir')
+const touch = require('touch')
 
 const SCRAPE_TWITTER_CONFIG = expandHome('~/.scrape-twitter')
+
+touch.sync(SCRAPE_TWITTER_CONFIG)
 
 const parseUsername = username => (username || '').replace('@', '')
 

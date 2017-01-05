@@ -4,6 +4,7 @@ const scrapeTwitter = require('../src')
 
 const {
   TimelineStream,
+  LikeStream,
   ConversationStream,
   TweetStream,
   ListStream,
@@ -34,6 +35,51 @@ test('TimelineStream should emit a particular set of tweets', () => {
   }
   const timelineStream = new TimelineStream('peterthiel')
   return streamToPromise(timelineStream).then(tweets => {
+    const tweetIds = tweets.map(tweet => tweet.id)
+    expect(tweetIds).toEqual(expectedTweetIds)
+    expect(tweets[0]).toEqual(expectedTweet)
+  })
+})
+
+test.skip('LikeStream should emit a particular set of tweets', () => {
+  const expectedTweetIds = [
+    '453896154439499776',
+    '448460333808877568',
+    '444111658508898304',
+    '443801915756138497',
+    '443749290717241344',
+    '443683376764317696',
+    '443077086786633728',
+    '442030176873238528',
+    '441937334221950976',
+    '441871397091291136'
+  ]
+  const expectedTweet = {
+    id: '453896154439499776',
+    screenName: 'bemomentum',
+    text: expect.stringMatching('8 tips for creating the perfect pitch deck'),
+    time: '2014-04-09T14:04:10.000Z',
+    isPinned: false,
+    isReplyTo: false,
+    isRetweet: false,
+    userMentions: [],
+    urls: [
+      { indices: [ 75, 97 ], url: 'http://buff.ly/1qq7VRw' }
+    ],
+    hashtags: [],
+    images: [],
+    favoriteCount: expect.any(Number),
+    replyCount: expect.any(Number),
+    retweetCount: expect.any(Number)
+  }
+
+  const env = {
+    TWITTER_USERNAME: 'bemomentum',
+    TWITTER_PASSWORD: 'forawhile',
+    TWITTER_KDT: 'AG5Cw6jJDktHfiQFF9mdEqz4c4NJ29rvvHTaIi9w'
+  }
+  const likeStream = new LikeStream('bemomentum', { env, count: 10 })
+  return streamToPromise(likeStream).then(tweets => {
     const tweetIds = tweets.map(tweet => tweet.id)
     expect(tweetIds).toEqual(expectedTweetIds)
     expect(tweets[0]).toEqual(expectedTweet)
