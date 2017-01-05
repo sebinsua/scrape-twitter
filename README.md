@@ -29,6 +29,13 @@ $ scrape-twitter timeline nouswaves
 # ...
 ```
 
+### Get likes
+
+```sh
+$ scrape-twitter likes sebinsua
+# ...
+```
+
 ### Get conversation
 
 ```sh
@@ -75,6 +82,10 @@ npm install -g scrape-twitter
 ### `new TimelineStream(username: string, { retweets: boolean, replies: boolean, count: ?number })`
 
 Create a `ReadableStream<Tweet>` for the timeline of a `username`.
+
+### `new LikeStream(username: string, { count: ?number })`
+
+Create a `ReadableStream<Tweet>` for the likes of a `username`.
 
 ### `new ConversationStream(username: string, id: string, { count: ?number })`
 
