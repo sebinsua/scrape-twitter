@@ -1,7 +1,7 @@
 # `scrape-twitter` [![Build Status](https://travis-ci.org/sebinsua/scrape-twitter.png)](https://travis-ci.org/sebinsua/scrape-twitter) [![npm version](https://badge.fury.io/js/scrape-twitter.svg)](https://npmjs.org/package/scrape-twitter)
 > 🐦 Access Twitter data without an API key
 
-This module provides command line interfaces to scrape: profiles, timelines, search and conversations.
+This module provides command line interfaces to scrape: profiles, timelines, connections, likes, search and conversations.
 
 It also exposes both streams and a promise returning function to help accessing Twitter in your own applications.
 
@@ -9,7 +9,7 @@ It also exposes both streams and a promise returning function to help accessing 
 
 - [x] Get Twitter data without being required to configure an API key.
 - [x] Twitter can't constrain access as easily as they can to an API or an individual API key. Any constraints introduced would apply to their public site. A scraper can be fixed; you are no longer beholden to Twitter.
-- [x] Grab timelines, whole conversations, profiles, likes, etc.
+- [x] Grab timelines, whole conversations, profiles, connections, likes, etc.
 - [x] Automatically pages to fetch all tweets.
 - [x] Provides metadata on how tweet replies are linked together. *e.g. `isReplyToId`*
 
@@ -35,6 +35,15 @@ This command requires a valid login. It will check for the following environment
 
 ```sh
 $ scrape-twitter likes sebinsua
+# ...
+```
+
+### Get connections
+
+This command also requires a valid login.
+
+```sh
+$ scrape-twitter connections sebinsua --type=following
 # ...
 ```
 
@@ -85,9 +94,13 @@ npm install -g scrape-twitter
 
 Create a `ReadableStream<Tweet>` for the timeline of a `username`.
 
-### `new LikeStream(username: string, { count: ?number })`
+### `new LikeStream(username: string, { count: ?number, env: process.env })`
 
 Create a `ReadableStream<Tweet>` for the likes of a `username`.
+
+### `new LikeStream(username: string, type: 'following' | 'followers', process.env)`
+
+Create a `ReadableStream<UserConnection>` for the connections of a `username`.
 
 ### `new ConversationStream(username: string, id: string, { count: ?number })`
 
