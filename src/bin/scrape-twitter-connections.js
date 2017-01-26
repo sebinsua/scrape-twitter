@@ -28,7 +28,8 @@ if (cli.input.length === 0) {
   process.exit(1)
 } else {
   const username = cliUtils.parseUsername(cli.input[0])
-  const profiles = new ConnectionStream(username, cli.flags.type, env)
+  const type = cli.flags.type === 'following' ? 'following' : 'followers'
+  const profiles = new ConnectionStream(username, type, env)
   pump(
     profiles,
     JSONStream.stringify('[\n', ',\n', '\n]\n'),

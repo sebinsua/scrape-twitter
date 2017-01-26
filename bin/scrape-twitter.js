@@ -23,6 +23,7 @@ command.catch(() => {
       profile       Get a user's profile.
       timeline      Get a user's timeline.
       likes         Get a user's likes.
+      connections   Get a user's connections.
       conversation  Get a particular conversation.
       list          Get the timeline of a particular list.
       search        Query Twitter for matching tweets.

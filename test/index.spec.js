@@ -5,6 +5,7 @@ const scrapeTwitter = require('../src')
 const {
   TimelineStream,
   LikeStream,
+  ConnectionStream,
   ConversationStream,
   TweetStream,
   ListStream,
@@ -84,6 +85,28 @@ test.skip('LikeStream should emit a particular set of tweets', () => {
     const tweetIds = tweets.map(tweet => tweet.id)
     expect(tweetIds).toEqual(expectedTweetIds)
     expect(tweets[0]).toEqual(expectedTweet)
+  })
+})
+
+test.skip('ConnectionStream should emit a particular set of connections', () => {
+  const expectedConnection = {
+    screenName: 'TableCrowd',
+    profileImage: 'https://pbs.twimg.com/profile_images/2448165667/8gb38sxoeypx8p800knw_bigger.png',
+    name: 'TableCrowd',
+    bio: expect.any(String),
+    urls: expect.any(Array),
+    hashtags: expect.any(Array),
+    userMentions: expect.any(Array)
+  }
+
+  const env = {
+    TWITTER_USERNAME: 'bemomentum',
+    TWITTER_PASSWORD: 'forawhile',
+    TWITTER_KDT: 'AG5Cw6jJDktHfiQFF9mdEqz4c4NJ29rvvHTaIi9w'
+  }
+  const connectionStream = new ConnectionStream('bemomentum', 'following', env)
+  return streamToPromise(connectionStream).then(connections => {
+    expect(connections[0]).toEqual(expectedConnection)
   })
 })
 
