@@ -41,6 +41,25 @@ const getUserList = (username, list, startingId) => {
     .then(parser.toTweets)
 }
 
+const getUserConnections = (username, type, maxPosition) => {
+  if (typeof maxPosition === 'undefined') {
+    const url = `https://twitter.com/${username}/${type}`
+    return query.get(url, fetchWithCookie)
+      .then(toCheerio)
+      .then(parser.toConnections)
+  } else {
+    const url = `https://twitter.com/${username}/${type}/users`
+    const options = {
+      'include_available_features': '1',
+      'include_entities': '1',
+      'max_position': maxPosition
+    }
+    return query(url, options, fetchWithCookie)
+      .then(toCheerio)
+      .then(parser.toConnections)
+  }
+}
+
 const getUserConversation = (username, id, maxPosition) => {
   if (typeof maxPosition === 'undefined') {
     const url = `https://twitter.com/${username}/status/${id}`
@@ -94,6 +113,7 @@ module.exports = {
   getUserProfile,
   getUserTimeline,
   getUserLikes,
+  getUserConnections,
   getUserList,
   getUserConversation,
   getThreadedConversation,

@@ -16,7 +16,7 @@ class LikeStream extends Readable {
     this.username = username
     this.env = env
     this.count = count
-    debug(`LikeStream for ${this.username} created with`, { count: this.count })
+    debug(`LikeStream for ${this.username} created with `, { count: this.count })
   }
 
   _read () {

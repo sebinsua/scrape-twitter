@@ -9,6 +9,7 @@
     "scrape-twitter-likes": "./bin/scrape-twitter-likes.js",
     "scrape-twitter-profile": "./bin/scrape-twitter-profile.js",
     "scrape-twitter-list": "./bin/scrape-twitter-list.js",
+    "scrape-twitter-connections": "./bin/scrape-twitter-connections.js",
     "scrape-twitter-conversation": "./bin/scrape-twitter-conversation.js",
     "scrape-twitter-search": "./bin/scrape-twitter-search.js"
   },

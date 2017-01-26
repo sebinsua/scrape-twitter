@@ -215,6 +215,46 @@ const toTwitterProfile = ({ $ }) => {
   return userProfile
 }
 
+const parseConnection = ($, connectionElement) => {
+  const $c = $(connectionElement)
+
+  const screenName = $c.find('.ProfileCard-screenname span').text().trim()
+  const profileImage = $c.find('.ProfileCard-avatarImage').attr('src')
+  const name = $c.find('.ProfileNameTruncated-link').text().trim()
+  const bio = $c.find('.ProfileCard-bio').text().trim()
+
+  const userMentions = parseUsernamesFromText(bio)
+  const hashtags = parseHashtagsFromText(bio)
+  const urls = parseUrlsFromText(bio)
+
+  const userConnection = {
+    screenName,
+    profileImage,
+    name,
+    bio,
+    userMentions,
+    hashtags,
+    urls
+  }
+
+  debug('user connection found:', userConnection)
+
+  return userConnection
+}
+
+const toConnections = ({ $, _minPosition }) => {
+  const min = _minPosition || $('.GridTimeline-items').attr('data-min-position')
+
+  const MATCH_CONNECTIONS_ONLY = '.ProfileCard'
+  const connections = $(MATCH_CONNECTIONS_ONLY).toArray().map(
+    connectionElement => parseConnection($, connectionElement)
+  )
+
+  connections._minPosition = min
+
+  return connections
+}
+
 const toTweets = ({ $ }) => {
   const MATCH_TWEETS_ONLY = '.tweet:not(.modal-body)'
   return $(MATCH_TWEETS_ONLY).toArray().map(tweetElement => parseTweet($, tweetElement))
@@ -270,5 +310,6 @@ const toThreadedTweets = id => ({ $, _minPosition }) => {
 }
 
 module.exports.toTwitterProfile = toTwitterProfile
+module.exports.toConnections = toConnections
 module.exports.toTweets = toTweets
 module.exports.toThreadedTweets = toThreadedTweets
