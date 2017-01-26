@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/sebinsua/scrape-twitter/compare/v0.7.2...v0.8.0) (2017-01-26)
+
+
+### Features
+
+* **connections:** added connections stream ([a1f54f5](https://github.com/sebinsua/scrape-twitter/commit/a1f54f5))
+
+
+
 <a name="0.7.2"></a>
 ## [0.7.2](https://github.com/sebinsua/scrape-twitter/compare/v0.7.1...v0.7.2) (2017-01-05)
 
