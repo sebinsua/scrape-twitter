@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.2"></a>
+## [0.8.2](https://github.com/sebinsua/scrape-twitter/compare/v0.8.1...v0.8.2) (2017-01-27)
+
+
+### Bug Fixes
+
+* **package:** expose dist ([b62216f](https://github.com/sebinsua/scrape-twitter/commit/b62216f))
+
+
+
 <a name="0.8.1"></a>
 ## [0.8.1](https://github.com/sebinsua/scrape-twitter/compare/v0.8.0...v0.8.1) (2017-01-26)
 
