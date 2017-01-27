@@ -13,7 +13,7 @@
     "scrape-twitter-conversation": "./bin/scrape-twitter-conversation.js",
     "scrape-twitter-search": "./bin/scrape-twitter-search.js"
   },
-  "main": "src",
+  "main": "dist",
   "engines": {
     "node": "^6"
   },

@@ -3,3 +3,4 @@
 .editorconfig
 .gitignore
 src/
+test/
