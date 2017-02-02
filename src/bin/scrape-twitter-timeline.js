@@ -14,6 +14,7 @@ const cli = meow(`
     --with-replies,  -p   Include replies
     --count,         -c   Get first N items
 `, {
+  string: [ 'username' ],
   alias: { t: 'withRetweets', p: 'withReplies', c: 'count' }
 })
 

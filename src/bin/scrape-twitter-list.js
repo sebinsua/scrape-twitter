@@ -12,6 +12,7 @@ const cli = meow(`
   Options
     --count, -c   Get first N items
 `, {
+  string: [ 'username' ],
   alias: { c: 'count' }
 })
 

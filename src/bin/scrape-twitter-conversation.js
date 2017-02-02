@@ -13,7 +13,7 @@ const cli = meow(`
   Options
     --count, -c   Get first N items
 `, {
-  string: [ '_' ], // It turns out Twitter ids are very large...
+  string: [ '_', 'username' ], // It turns out Twitter ids are very large...
   alias: { c: 'count' }
 })
 
