@@ -5,6 +5,8 @@ This module provides command line interfaces to scrape: profiles, timelines, con
 
 It also exposes both streams and a promise returning function to help accessing Twitter in your own applications.
 
+Real-time firehoses can be created using the companion module [`monitor-head-stream`](https://github.com/sebinsua/monitor-head-stream#example). 
+
 ## Features
 
 - [x] Get Twitter data without being required to configure an API key.
