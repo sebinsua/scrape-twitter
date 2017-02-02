@@ -13,7 +13,7 @@ const cli = meow(`
   Options
     --count, -c   Get first N items
 `, {
-  string: [ '_', 'username' ], // It turns out Twitter ids are very large...
+  string: [ '_' ], // Twitter ids too large for JavaScript numbers. And hexadecimal usernames break minimist.
   alias: { c: 'count' }
 })
 

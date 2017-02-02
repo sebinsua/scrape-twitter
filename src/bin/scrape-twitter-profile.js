@@ -8,7 +8,7 @@ const cli = meow(`
   Usage
     $ scrape-twitter profile <username>
 `, {
-  string: [ 'username' ]
+  string: [ '_' ]
 })
 
 if (cli.input.length === 0) {

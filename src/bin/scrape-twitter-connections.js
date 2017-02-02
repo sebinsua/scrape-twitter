@@ -15,7 +15,7 @@ const cli = meow(`
   Options
     --type,  -t   The type of connections: 'following' or 'followers'
 `, {
-  string: [ 'username' ],
+  string: [ '_' ],
   default: { type: 'following' },
   alias: { t: 'type' }
 })
