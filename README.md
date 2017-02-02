@@ -98,7 +98,7 @@ Create a `ReadableStream<Tweet>` for the timeline of a `username`.
 
 Create a `ReadableStream<Tweet>` for the likes of a `username`.
 
-### `new LikeStream(username: string, type: 'following' | 'followers', process.env)`
+### `new ConnectionStream(username: string, type: 'following' | 'followers', process.env)`
 
 Create a `ReadableStream<UserConnection>` for the connections of a `username`.
 
