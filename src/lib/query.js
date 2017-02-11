@@ -3,7 +3,13 @@ const queryString = require('query-string')
 const debug = require('debug')('scrape-twitter:query')
 
 const checkStatus = (response) => {
-  if (response.ok) {
+  const requiresLogin = /login\?redirect_after_login/.test(response.url || '')
+  if (requiresLogin) {
+    const error = new Error('An active login is required for this API call')
+    error.response = response
+    error.statusCode = 403
+    throw error
+  } else if (response.ok) {
     debug('response was ok')
     return response
   } else {
