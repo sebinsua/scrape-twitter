@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.5"></a>
+## [0.8.5](https://github.com/sebinsua/scrape-twitter/compare/v0.8.4...v0.8.5) (2017-02-11)
+
+
+### Bug Fixes
+
+* **check-status:** detect missing login ([7a26426](https://github.com/sebinsua/scrape-twitter/commit/7a26426))
+* **test:** tweet can contain quote ([f58a9e0](https://github.com/sebinsua/scrape-twitter/commit/f58a9e0))
+* **timeline:** API for replies now requires login; needs refactor ([d7cad67](https://github.com/sebinsua/scrape-twitter/commit/d7cad67))
+
+
+
 <a name="0.8.4"></a>
 ## [0.8.4](https://github.com/sebinsua/scrape-twitter/compare/v0.8.3...v0.8.4) (2017-02-02)
 
