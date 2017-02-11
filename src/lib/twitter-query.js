@@ -12,7 +12,7 @@ const getUserTimeline = (username, startingId, { replies = false }) => {
     'include_entities': '1',
     'max_position': startingId
   }
-  return query(url, options)
+  return query(url, options, replies ? fetchWithCookie : undefined)
     .then(toCheerio)
     .then(parser.toTweets)
 }

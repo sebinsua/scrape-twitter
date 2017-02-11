@@ -1,7 +1,11 @@
 const Readable = require('readable-stream/readable')
 const debug = require('debug')('scrape-twitter:timeline-stream')
 
+const twitterLogin = require('./twitter-login')
 const twitterQuery = require('./twitter-query')
+
+const loginWhenReplies = (replies, env = {}) =>
+  replies ? twitterLogin(env) : Promise.resolve()
 
 class TimelineStream extends Readable {
 
@@ -10,12 +14,13 @@ class TimelineStream extends Readable {
   _numberOfTweetsRead = 0
   _lastReadTweetId = undefined
 
-  constructor (username, { retweets, replies, count } = {}) {
+  constructor (username, { retweets, replies, count, env } = {}) {
     super({ objectMode: true })
     this.username = username
     this.retweets = retweets == null ? false : retweets
     this.replies = replies == null ? false : replies
     this.count = count
+    this.env = env
     debug(`TimelineStream for ${this.username} created with`, { retweets: this.retweets, replies: this.replies, count: this.count })
   }
 
@@ -39,7 +44,13 @@ class TimelineStream extends Readable {
     debug('TimelineStream is now locked')
 
     debug(`TimelineStream reads timeline${this._lastReadTweetId ? ` from tweet ${this._lastReadTweetId} onwards` : ''}`)
-    twitterQuery.getUserTimeline(this.username, this._lastReadTweetId, { replies: this.replies })
+
+    loginWhenReplies(this.replies, this.env).then(() =>
+      twitterQuery.getUserTimeline(
+        this.username,
+        this._lastReadTweetId,
+        { replies: this.replies }
+      )
       .then(tweets => {
         let lastReadTweetId
         for (const tweet of tweets) {
@@ -89,6 +100,8 @@ class TimelineStream extends Readable {
         }
       })
       .catch(err => this.emit('error', err))
+    )
+    .catch(err => this.emit('error', err))
   }
 
 }

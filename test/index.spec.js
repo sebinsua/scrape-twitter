@@ -205,7 +205,6 @@ test('ListStream should emit a particular set of tweets', () => {
     isPinned: expect.any(Boolean),
     isReplyTo: expect.any(Boolean),
     isRetweet: expect.any(Boolean),
-    quote: expect.anything(),
     userMentions: expect.any(Array),
     urls: expect.any(Array),
     hashtags: expect.any(Array),
