@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.7"></a>
+## [0.8.7](https://github.com/sebinsua/scrape-twitter/compare/v0.8.6...v0.8.7) (2017-02-22)
+
+
+### Bug Fixes
+
+* **timeline:** last tweet should not include any retweets ([63e1e93](https://github.com/sebinsua/scrape-twitter/commit/63e1e93))
+
+
+
 <a name="0.8.6"></a>
 ## [0.8.6](https://github.com/sebinsua/scrape-twitter/compare/v0.8.5...v0.8.6) (2017-02-11)
 
