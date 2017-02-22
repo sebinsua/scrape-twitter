@@ -54,11 +54,11 @@ class TimelineStream extends Readable {
       .then(tweets => {
         let lastReadTweetId
         for (const tweet of tweets) {
-          lastReadTweetId = tweet.id
           if (this.retweets === false && tweet.isRetweet) {
             debug(`tweet ${tweet.id} was skipped as it is a retweet`)
             continue // Skip retweet.
           }
+          lastReadTweetId = tweet.id
 
           this.push(tweet)
           this._numberOfTweetsRead++
