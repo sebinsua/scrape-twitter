@@ -112,32 +112,24 @@ test.skip('ConnectionStream should emit a particular set of connections', () => 
 
 test('ConversationStream should emit a particular set of tweets', () => {
   const expectedTweetIds = [
-    '691761191182532608',
-    '691762148842807297',
-    '691766715835924484',
-    '691768456463675394',
-    '691769286482862080',
-    '691771378731782145',
-    '691777639678414848',
-    '691777773183049729',
-    '691779293467275264',
-    '691779731579146240',
-    '691782437634981888',
-    '691783075156606976',
-    '691783591395774465',
-    '691784317958225920',
-    '691788752759476225'
+    '837640713672196096',
+    '837641720082935810',
+    '837646055713951745',
+    '837646760159899648',
+    '837666633749512196',
+    '837832586722492416',
+    '837832769409585155',
+    '837832935927656448',
+    '837833085328769025'
   ]
   const expectedTweet = {
-    id: '691762148842807297',
-    screenName: 'nouswaves',
-    text: `1. Write a Twitter screen scraper on which I might build an interesting UI.
-2. Study more ML.
-3. Write 10s of unit tests for my bank CLI.`,
-    time: '2016-01-25T23:18:43.000Z',
+    id: '837641720082935810',
+    screenName: 'sebinsua',
+    text: `I will unpack these thoughts since they are important but probably look like trivialities:`,
+    time: '2017-03-03T12:32:03.000Z',
     isPinned: false,
     isReplyTo: true,
-    isReplyToId: '691761191182532608',
+    isReplyToId: '837640713672196096',
     isRetweet: false,
     userMentions: [],
     urls: [],
@@ -148,7 +140,7 @@ test('ConversationStream should emit a particular set of tweets', () => {
     retweetCount: expect.any(Number)
   }
 
-  const conversationStream = new ConversationStream('ctbeiser', '691766715835924484', {})
+  const conversationStream = new ConversationStream('sebinsua', '837640713672196096', {})
   return streamToPromise(conversationStream).then(tweets => {
     const tweetIds = tweets.map(tweet => tweet.id)
     expect(tweetIds).toEqual(expectedTweetIds)
