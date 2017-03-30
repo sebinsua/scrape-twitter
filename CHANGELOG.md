@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.8"></a>
+## [0.8.8](https://github.com/sebinsua/scrape-twitter/compare/v0.8.7...v0.8.8) (2017-03-30)
+
+
+### Bug Fixes
+
+* **test:** somebody deleted all of their tweets ([579690c](https://github.com/sebinsua/scrape-twitter/commit/579690c))
+* **user-profile:** screenName should be picked up correctly ([8641735](https://github.com/sebinsua/scrape-twitter/commit/8641735))
+
+
+
 <a name="0.8.7"></a>
 ## [0.8.7](https://github.com/sebinsua/scrape-twitter/compare/v0.8.6...v0.8.7) (2017-02-22)
 
