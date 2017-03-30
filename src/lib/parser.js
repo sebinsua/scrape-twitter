@@ -178,7 +178,7 @@ const toTwitterProfile = ({ $ }) => {
   const $nav = $('.ProfileNav')
 
   const profileImage = $avatar.find('.ProfileAvatar-image').attr('src')
-  const screenName = $header.find('.ProfileHeaderCard-screenname > a').first().text().substring(1)
+  const screenName = $header.find('.ProfileHeaderCard-screenname > a').first().text().trim().substring(1)
   const name = parseText($, $header.find('.ProfileHeaderCard-name a').first())
   const bio = parseText($, $header.find('.ProfileHeaderCard-bio').first())
   const location = $header.find('.ProfileHeaderCard-locationText').first().text().trim()
