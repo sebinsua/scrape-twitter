@@ -1,7 +1,7 @@
 {
   "name": "scrape-twitter",
   "description": "Access Twitter data without an API key.",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "author": "Seb Insua <me@sebinsua.com>",
   "bin": {
     "scrape-twitter": "./bin/scrape-twitter.js",
