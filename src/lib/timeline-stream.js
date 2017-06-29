@@ -8,7 +8,6 @@ const loginWhenReplies = (replies, env = {}) =>
   replies ? twitterLogin(env) : Promise.resolve()
 
 class TimelineStream extends Readable {
-
   isLocked = false
 
   _numberOfTweetsRead = 0
@@ -103,7 +102,6 @@ class TimelineStream extends Readable {
     )
     .catch(err => this.emit('error', err))
   }
-
 }
 
 module.exports = TimelineStream

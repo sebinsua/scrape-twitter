@@ -5,7 +5,6 @@ const login = require('./twitter-login')
 const twitterQuery = require('./twitter-query')
 
 class LikeStream extends Readable {
-
   isLocked = false
 
   _numberOfTweetsRead = 0
@@ -88,7 +87,6 @@ class LikeStream extends Readable {
         }).catch(err => this.emit('error', err))
     ).catch(err => this.emit('error', err))
   }
-
 }
 
 module.exports = LikeStream

@@ -4,7 +4,6 @@ const debug = require('debug')('scrape-twitter:threaded-conversation-stream')
 const twitterQuery = require('./twitter-query')
 
 class ThreadedConversationStream extends Readable {
-
   isLocked = false
 
   _numberOfTweetsRead = 0
@@ -52,7 +51,6 @@ class ThreadedConversationStream extends Readable {
       })
       .catch(err => this.emit('error', err))
   }
-
 }
 
 module.exports = ThreadedConversationStream

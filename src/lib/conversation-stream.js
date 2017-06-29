@@ -6,7 +6,6 @@ const twitterQuery = require('./twitter-query')
 const flatten = arr => arr.reduce((prev, curr) => prev.concat(curr), [])
 
 class ConversationStream extends Readable {
-
   isLocked = false
 
   _numberOfTweetsRead = 0
@@ -108,7 +107,6 @@ class ConversationStream extends Readable {
       })
       .catch(err => this.emit('error', err))
   }
-
 }
 
 module.exports = ConversationStream

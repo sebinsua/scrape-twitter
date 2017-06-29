@@ -5,7 +5,6 @@ const login = require('./twitter-login')
 const twitterQuery = require('./twitter-query')
 
 class ConnectionStream extends Readable {
-
   isLocked = false
 
   _numberOfConnectionsRead = 0
@@ -79,7 +78,6 @@ class ConnectionStream extends Readable {
         }).catch(err => this.emit('error', err))
     ).catch(err => this.emit('error', err))
   }
-
 }
 
 module.exports = ConnectionStream

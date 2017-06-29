@@ -4,7 +4,6 @@ const debug = require('debug')('scrape-twitter:tweet-stream')
 const twitterQuery = require('./twitter-query')
 
 class TweetStream extends Readable {
-
   isLocked = false
 
   _numberOfTweetsRead = 0
@@ -91,7 +90,6 @@ class TweetStream extends Readable {
       })
       .catch(err => this.emit('error', err))
   }
-
 }
 
 module.exports = TweetStream

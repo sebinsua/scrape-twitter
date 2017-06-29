@@ -9,7 +9,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * **list:** fixed list twitter query ([817f5d5](https://github.com/sebinsua/scrape-twitter/commit/817f5d5))
-* **test:** an extra tweet appears against a conversation; erm twitter? ([c31e905](https://github.com/sebinsua/scrape-twitter/commit/c31e905))
 
 
 ### Features
