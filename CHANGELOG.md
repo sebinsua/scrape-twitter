@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/sebinsua/scrape-twitter/compare/v0.8.8...v0.9.0) (2017-06-29)
+
+
+### Bug Fixes
+
+* **list:** fixed list twitter query ([817f5d5](https://github.com/sebinsua/scrape-twitter/commit/817f5d5))
+* **test:** an extra tweet appears against a conversation; erm twitter? ([c31e905](https://github.com/sebinsua/scrape-twitter/commit/c31e905))
+
+
+### Features
+
+* **fetch:** https.globalAgent added to fetcher to support proxies ([a27abe2](https://github.com/sebinsua/scrape-twitter/commit/a27abe2))
+* **profile:** add backgroundImage to profile ([61ca4a9](https://github.com/sebinsua/scrape-twitter/commit/61ca4a9))
+
+
+
 <a name="0.8.9"></a>
 ## [0.8.9](https://github.com/sebinsua/scrape-twitter/compare/v0.8.8...v0.8.9) (2017-05-02)
 
