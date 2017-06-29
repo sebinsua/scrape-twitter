@@ -32,8 +32,6 @@ const getUserLikes = (username, startingId) => {
 const getUserList = (username, list, startingId) => {
   const url = `https://twitter.com/${username}/lists/${list}/timeline`
   const options = {
-    'include_available_features': '1',
-    'include_entities': '1',
     'max_position': startingId
   }
   return query(url, options)
