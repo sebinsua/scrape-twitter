@@ -1,6 +1,7 @@
 const fetch = require('isomorphic-fetch')
 const queryString = require('query-string')
 const debug = require('debug')('scrape-twitter:query')
+const https = require('https')
 
 const checkStatus = (response) => {
   const requiresLogin = /login\?redirect_after_login/.test(response.url || '')
@@ -49,7 +50,7 @@ const query = (url, options, fetcher = fetch) => {
   const qs = queryString.stringify(options)
   const resource = url + (qs.length ? `?${qs}` : '')
   debug('query on resource:', resource)
-  return fetcher(resource)
+  return fetcher(resource, { agent: https.globalAgent })
     .then(checkStatus)
     .then(toJson)
     .then(toHtml)
@@ -57,7 +58,7 @@ const query = (url, options, fetcher = fetch) => {
 
 const get = (resource, fetcher = fetch) => {
   debug('get on resource:', resource)
-  return fetcher(resource)
+  return fetcher(resource, { agent: https.globalAgent })
     .then(checkStatus)
     .then(toText)
     .then(html => ({ html }))
