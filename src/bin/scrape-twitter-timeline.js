@@ -3,6 +3,7 @@ const meow = require('meow')
 const JSONStream = require('JSONStream')
 const pump = require('pump')
 const TimelineStream = require('../lib/timeline-stream')
+const MediaTimelineStream = require('../lib/media-stream')
 const cliUtils = require('../lib/cli-utils')
 
 const SCRAPE_TWITTER_CONFIG = cliUtils.SCRAPE_TWITTER_CONFIG

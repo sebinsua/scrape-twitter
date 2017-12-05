@@ -17,12 +17,16 @@ const getUserTimeline = (username, startingId, { replies = false }) => {
     .then(parser.toTweets)
 }
 
-const getUserMediaTimeline = (username, startingId) => {
-  const url = `https://twitter.com/i/profiles/show/${username}/media`
+const getUserMediaTimeline = (username, maxPosition) => {
+  const url = 'https://twitter.com/i/search/timeline'
   const options = {
+    'vertical': 'default',
+    'src': 'typd',
     'include_available_features': '1',
     'include_entities': '1',
-    'max_position': startingId
+    'f': 'tweets',
+    'q': `from:${username} filter:images`,
+    'max_position': maxPosition
   }
   return query(url, options)
     .then(toCheerio)
