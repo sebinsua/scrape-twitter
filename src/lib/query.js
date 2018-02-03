@@ -3,6 +3,8 @@ const queryString = require('query-string')
 const debug = require('debug')('scrape-twitter:query')
 const https = require('https')
 
+const DEFAULT_TIMEOUT = 10000
+
 const checkStatus = response => {
   const requiresLogin = /login\?redirect_after_login/.test(response.url || '')
   if (requiresLogin) {
@@ -53,7 +55,10 @@ const query = (url, options, fetcher = fetch) => {
   const qs = queryString.stringify(options)
   const resource = url + (qs.length ? `?${qs}` : '')
   debug('query on resource:', resource)
-  return fetcher(resource, { agent: https.globalAgent })
+  return fetcher(resource, {
+    agent: https.globalAgent,
+    timeout: process.env.SCRAPE_TWITTER_TIMEOUT || DEFAULT_TIMEOUT
+  })
     .then(checkStatus)
     .then(toJson)
     .then(toHtml)
@@ -61,7 +66,10 @@ const query = (url, options, fetcher = fetch) => {
 
 const get = (resource, fetcher = fetch) => {
   debug('get on resource:', resource)
-  return fetcher(resource, { agent: https.globalAgent })
+  return fetcher(resource, {
+    agent: https.globalAgent,
+    timeout: process.env.SCRAPE_TWITTER_TIMEOUT || DEFAULT_TIMEOUT
+  })
     .then(checkStatus)
     .then(toText)
     .then(html => ({ html }))

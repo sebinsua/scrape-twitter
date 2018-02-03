@@ -14,6 +14,8 @@ const setCookie = denodeify(jar.setCookie.bind(jar))
 
 const fetch = fetchCookieDecorator(isomorphicFetch, jar)
 
+const DEFAULT_TIMEOUT = 10000
+
 const toText = response => response.text()
 
 const setCookieWithKdt = kdt => {
@@ -32,7 +34,9 @@ const setCookieWithKdt = kdt => {
 }
 
 const getAuthToken = () => {
-  return fetch('https://twitter.com')
+  return fetch('https://twitter.com', {
+    timeout: process.env.SCRAPE_TWITTER_TIMEOUT || DEFAULT_TIMEOUT
+  })
     .then(toText)
     .then(body => {
       const $ = cheerio.load(body)
@@ -75,7 +79,8 @@ const loginWithAuthToken = (
         'User-Agent':
           'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:50.0) Gecko/20100101 Firefox/50.0'
       },
-      body: formData
+      body: formData,
+      timeout: process.env.SCRAPE_TWITTER_TIMEOUT || DEFAULT_TIMEOUT
     })
       .then(response => {
         const location = response.headers.get('location') || ''
@@ -95,7 +100,7 @@ const loginWithAuthToken = (
   }
 }
 
-function login (env = {}) {
+function login(env = {}) {
   const { TWITTER_USERNAME, TWITTER_PASSWORD, TWITTER_KDT } = env
   return setCookieWithKdt(TWITTER_KDT)
     .then(getAuthToken)
