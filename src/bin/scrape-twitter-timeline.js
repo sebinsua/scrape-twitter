@@ -3,6 +3,7 @@ const meow = require('meow')
 const JSONStream = require('JSONStream')
 const pump = require('pump')
 const TimelineStream = require('../lib/timeline-stream')
+const MediaTimelineStream = require('../lib/media-stream')
 const cliUtils = require('../lib/cli-utils')
 
 const SCRAPE_TWITTER_CONFIG = cliUtils.SCRAPE_TWITTER_CONFIG
@@ -15,10 +16,11 @@ const cli = meow(`
   Options
     --with-retweets, -t   Include retweets
     --with-replies,  -p   Include replies
+    --media,  -m   Include media
     --count,         -c   Get first N items
 `, {
   string: [ '_' ],
-  alias: { t: 'withRetweets', p: 'withReplies', c: 'count' }
+  alias: { t: 'withRetweets', p: 'withReplies', c: 'count', m: 'media' }
 })
 
 if (cli.input.length === 0) {
@@ -30,7 +32,10 @@ if (cli.input.length === 0) {
   process.exit(1)
 } else {
   const username = cliUtils.parseUsername(cli.input[0])
-  const tweets = new TimelineStream(username, {
+  const tweets = cli.flags.media ? new MediaTimelineStream(username, {
+    count: cli.flags.count,
+    env
+  }) : new TimelineStream(username, {
     retweets: cli.flags.withRetweets || false,
     replies: cli.flags.withReplies || false,
     count: cli.flags.count,

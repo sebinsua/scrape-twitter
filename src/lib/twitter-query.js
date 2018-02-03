@@ -17,6 +17,22 @@ const getUserTimeline = (username, startingId, { replies = false }) => {
     .then(parser.toTweets)
 }
 
+const getUserMediaTimeline = (username, maxPosition) => {
+  const url = 'https://twitter.com/i/search/timeline'
+  const options = {
+    'vertical': 'default',
+    'src': 'typd',
+    'include_available_features': '1',
+    'include_entities': '1',
+    'f': 'tweets',
+    'q': `from:${username} filter:images`,
+    'max_position': maxPosition
+  }
+  return query(url, options)
+    .then(toCheerio)
+    .then(parser.toTweets)
+}
+
 const getUserLikes = (username, startingId) => {
   const url = `https://twitter.com/${username}/likes/timeline`
   const options = {
@@ -110,6 +126,7 @@ const queryTweets = (q, type, maxPosition) => {
 module.exports = {
   getUserProfile,
   getUserTimeline,
+  getUserMediaTimeline,
   getUserLikes,
   getUserConnections,
   getUserList,
