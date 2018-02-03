@@ -36,8 +36,15 @@ class ListStream extends Readable {
     this.isLocked = true
     debug('ListStream is now locked')
 
-    debug(`ListStream reads list${this._lastReadTweetId ? ` from tweet ${this._lastReadTweetId} onwards` : ''}`)
-    twitterQuery.getUserList(this.username, this.list, this._lastReadTweetId)
+    debug(
+      `ListStream reads list${
+        this._lastReadTweetId
+          ? ` from tweet ${this._lastReadTweetId} onwards`
+          : ''
+      }`
+    )
+    twitterQuery
+      .getUserList(this.username, this.list, this._lastReadTweetId)
       .then(tweets => {
         let lastReadTweetId
         for (const tweet of tweets) {

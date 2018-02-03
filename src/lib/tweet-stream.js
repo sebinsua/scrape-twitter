@@ -37,9 +37,17 @@ class TweetStream extends Readable {
     this.isLocked = true
     debug('TweetStream is now locked')
 
-    debug(`TweetStream queries for tweets outside [ ${this._firstReadTweet}, ..., ${this._lastReadTweet} ]`)
-    const maxPosition = this._firstReadTweet && this._lastReadTweet ? `TWEET-${this._lastReadTweet}-${this._firstReadTweet}` : null
-    twitterQuery.queryTweets(this.query, this.type, maxPosition)
+    debug(
+      `TweetStream queries for tweets outside [ ${this._firstReadTweet}, ..., ${
+        this._lastReadTweet
+      } ]`
+    )
+    const maxPosition =
+      this._firstReadTweet && this._lastReadTweet
+        ? `TWEET-${this._lastReadTweet}-${this._firstReadTweet}`
+        : null
+    twitterQuery
+      .queryTweets(this.query, this.type, maxPosition)
       .then(tweets => {
         if (!this._firstReadTweet) {
           this._firstReadTweet = tweets[0] ? tweets[0].id : null

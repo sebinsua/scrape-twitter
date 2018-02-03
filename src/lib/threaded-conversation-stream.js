@@ -33,7 +33,8 @@ class ThreadedConversationStream extends Readable {
 
     this.isLocked = true
     debug('ThreadedConversationStream is now locked')
-    twitterQuery.getThreadedConversation(this.id)
+    twitterQuery
+      .getThreadedConversation(this.id)
       .then(tweets => {
         for (const tweet of tweets) {
           this.push(tweet)

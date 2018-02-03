@@ -13,9 +13,7 @@ const {
 } = scrapeTwitter
 
 test('TimelineStream should emit a particular set of tweets', () => {
-  const expectedTweetIds = [
-    '509087583348195329'
-  ]
+  const expectedTweetIds = ['509087583348195329']
   const expectedTweet = {
     screenName: 'peterthiel',
     id: '509087583348195329',
@@ -26,7 +24,10 @@ test('TimelineStream should emit a particular set of tweets', () => {
     images: [],
     urls: [
       // url-regex is sometimes matching words in front of a url as the url... This needs to be fixed.
-      { indices: [ expect.any(Number), expect.any(Number) ], url: expect.any(String) }
+      {
+        indices: [expect.any(Number), expect.any(Number)],
+        url: expect.any(String)
+      }
     ],
     isPinned: false,
     isReplyTo: false,
@@ -65,9 +66,7 @@ test.skip('LikeStream should emit a particular set of tweets', () => {
     isReplyTo: false,
     isRetweet: false,
     userMentions: [],
-    urls: [
-      { indices: [ 75, 97 ], url: 'http://buff.ly/1qq7VRw' }
-    ],
+    urls: [{ indices: [75, 97], url: 'http://buff.ly/1qq7VRw' }],
     hashtags: [],
     images: [],
     favoriteCount: expect.any(Number),
@@ -91,7 +90,8 @@ test.skip('LikeStream should emit a particular set of tweets', () => {
 test.skip('ConnectionStream should emit a particular set of connections', () => {
   const expectedConnection = {
     screenName: 'TableCrowd',
-    profileImage: 'https://pbs.twimg.com/profile_images/2448165667/8gb38sxoeypx8p800knw_bigger.png',
+    profileImage:
+      'https://pbs.twimg.com/profile_images/2448165667/8gb38sxoeypx8p800knw_bigger.png',
     name: 'TableCrowd',
     bio: expect.any(String),
     urls: expect.any(Array),
@@ -141,7 +141,11 @@ test('ConversationStream should emit a particular set of tweets', () => {
     retweetCount: expect.any(Number)
   }
 
-  const conversationStream = new ConversationStream('sebinsua', '837640713672196096', {})
+  const conversationStream = new ConversationStream(
+    'sebinsua',
+    '837640713672196096',
+    {}
+  )
   return streamToPromise(conversationStream).then(tweets => {
     const tweetIds = tweets.map(tweet => tweet.id)
     expect(tweetIds).toEqual(expectedTweetIds)
@@ -171,9 +175,7 @@ test('TweetStream should emit a particular set of tweets', () => {
     isReplyTo: false,
     isRetweet: false,
     userMentions: [],
-    urls: [
-      { indices: [ 75, 97 ], url: 'http://buff.ly/1qq7VRw' }
-    ],
+    urls: [{ indices: [75, 97], url: 'http://buff.ly/1qq7VRw' }],
     hashtags: [],
     images: [],
     favoriteCount: expect.any(Number),
@@ -181,7 +183,9 @@ test('TweetStream should emit a particular set of tweets', () => {
     retweetCount: expect.any(Number)
   }
 
-  const timelineStream = new TweetStream('from:bemomentum', 'latest', { count: 10 })
+  const timelineStream = new TweetStream('from:bemomentum', 'latest', {
+    count: 10
+  })
   return streamToPromise(timelineStream).then(tweets => {
     const tweetIds = tweets.map(tweet => tweet.id)
     expect(tweetIds).toEqual(expectedTweetIds)
@@ -218,7 +222,8 @@ test('getUserProfile() should return my account', () => {
   const expectedUserProfile = {
     screenName: 'sebinsua',
     name: 'Seb Insua',
-    profileImage: 'https://pbs.twimg.com/profile_images/643854442362720256/nSrJUpet_400x400.png',
+    profileImage:
+      'https://pbs.twimg.com/profile_images/643854442362720256/nSrJUpet_400x400.png',
     bio: 'musing → @nouswaves',
     location: 'London, England',
     url: 'http://sebinsua.com',
@@ -228,7 +233,7 @@ test('getUserProfile() should return my account', () => {
     userMentions: [
       {
         screenName: 'nouswaves',
-        indices: [ 9, 19 ]
+        indices: [9, 19]
       }
     ],
     followingCount: expect.any(Number),

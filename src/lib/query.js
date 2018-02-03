@@ -3,7 +3,7 @@ const queryString = require('query-string')
 const debug = require('debug')('scrape-twitter:query')
 const https = require('https')
 
-const checkStatus = (response) => {
+const checkStatus = response => {
   const requiresLogin = /login\?redirect_after_login/.test(response.url || '')
   if (requiresLogin) {
     const error = new Error('An active login is required for this API call')
@@ -34,7 +34,10 @@ const toHtml = response => {
   } else if ('conversation_html' in response) {
     minPosition = response['min_position']
     html = response['conversation_html'].trim()
-  } else if ('descendants' in response && 'items-html' in response['descendants']) {
+  } else if (
+    'descendants' in response &&
+    'items-html' in response['descendants']
+  ) {
     minPosition = response['descendants']['min_position']
     html = response['descendants']['items_html'].trim()
   }

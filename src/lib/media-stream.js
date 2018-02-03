@@ -18,7 +18,9 @@ class MediaTimelineStream extends Readable {
     this.username = username
     this.count = count
     this.env = env
-    debug(`MediaTimelineStream for ${this.username} created with`, { count: this.count })
+    debug(`MediaTimelineStream for ${this.username} created with`, {
+      count: this.count
+    })
   }
 
   _read () {
@@ -40,60 +42,68 @@ class MediaTimelineStream extends Readable {
     this.isLocked = true
     debug('MediaTimelineStream is now locked')
 
-    debug(`MediaTimelineStream reads timeline${this._lastReadTweetId ? ` from tweet ${this._lastReadTweetId} onwards` : ''}`)
-
-    loginWithOptionalEnv(this.env).then(() =>
-      twitterQuery.getUserMediaTimeline(
-        this.username,
+    debug(
+      `MediaTimelineStream reads timeline${
         this._lastReadTweetId
-      )
-      .then(tweets => {
-        let lastReadTweetId
-        for (const tweet of tweets) {
-          lastReadTweetId = tweet.id
-
-          this.push(tweet)
-          this._numberOfTweetsRead++
-          if (this._numberOfTweetsRead >= this.count) {
-            debug('MediaTimelineStream has read up to the max count')
-            break
-          }
-        }
-
-        // We have to check to see if there are more tweets, by seeing if the
-        // last tweet id has been repeated or not.
-        const hasZeroTweets = lastReadTweetId === undefined
-        const hasDifferentLastTweet = this._lastReadTweetId !== lastReadTweetId
-        const hasMoreTweets = !hasZeroTweets && hasDifferentLastTweet
-        if (hasMoreTweets === false) {
-          debug('MediaTimelineStream has no more tweets:', {
-            hasZeroTweets,
-            hasDifferentLastTweet,
-            hasMoreTweets
-          })
-          this.push(null)
-        } else {
-          debug('MediaTimelineStream has more tweets:', {
-            hasZeroTweets,
-            hasDifferentLastTweet,
-            hasMoreTweets
-          })
-        }
-
-        debug(`MediaTimelineStream sets the last tweet to ${lastReadTweetId}`)
-        this._lastReadTweetId = lastReadTweetId
-
-        this.isLocked = false
-        debug('MediaTimelineStream is now unlocked')
-
-        if (hasMoreTweets) {
-          debug('MediaTimelineStream has more tweets so calls this._read')
-          this._read()
-        }
-      })
-      .catch(err => this.emit('error', err))
+          ? ` from tweet ${this._lastReadTweetId} onwards`
+          : ''
+      }`
     )
-    .catch(err => this.emit('error', err))
+
+    loginWithOptionalEnv(this.env)
+      .then(() =>
+        twitterQuery
+          .getUserMediaTimeline(this.username, this._lastReadTweetId)
+          .then(tweets => {
+            let lastReadTweetId
+            for (const tweet of tweets) {
+              lastReadTweetId = tweet.id
+
+              this.push(tweet)
+              this._numberOfTweetsRead++
+              if (this._numberOfTweetsRead >= this.count) {
+                debug('MediaTimelineStream has read up to the max count')
+                break
+              }
+            }
+
+            // We have to check to see if there are more tweets, by seeing if the
+            // last tweet id has been repeated or not.
+            const hasZeroTweets = lastReadTweetId === undefined
+            const hasDifferentLastTweet =
+              this._lastReadTweetId !== lastReadTweetId
+            const hasMoreTweets = !hasZeroTweets && hasDifferentLastTweet
+            if (hasMoreTweets === false) {
+              debug('MediaTimelineStream has no more tweets:', {
+                hasZeroTweets,
+                hasDifferentLastTweet,
+                hasMoreTweets
+              })
+              this.push(null)
+            } else {
+              debug('MediaTimelineStream has more tweets:', {
+                hasZeroTweets,
+                hasDifferentLastTweet,
+                hasMoreTweets
+              })
+            }
+
+            debug(
+              `MediaTimelineStream sets the last tweet to ${lastReadTweetId}`
+            )
+            this._lastReadTweetId = lastReadTweetId
+
+            this.isLocked = false
+            debug('MediaTimelineStream is now unlocked')
+
+            if (hasMoreTweets) {
+              debug('MediaTimelineStream has more tweets so calls this._read')
+              this._read()
+            }
+          })
+          .catch(err => this.emit('error', err))
+      )
+      .catch(err => this.emit('error', err))
   }
 }
 

@@ -38,15 +38,21 @@ class ConversationStream extends Readable {
 
     this.isLocked = true
     debug('ConversationStream is now locked')
-    twitterQuery.getUserConversation(this.username, this.id, this._lastMinPosition)
+    twitterQuery
+      .getUserConversation(this.username, this.id, this._lastMinPosition)
       .then(tweets => {
         const extendedTweets = tweets.reduce((ets, ct, idx) => {
-          const _showMoreTweetsFromConversation = ct._showMoreTweetsFromConversation
+          const _showMoreTweetsFromConversation =
+            ct._showMoreTweetsFromConversation
           delete ct._showMoreTweetsFromConversation
 
           ets.push(ct)
           if (_showMoreTweetsFromConversation) {
-            ets.push(twitterQuery.getThreadedConversation(_showMoreTweetsFromConversation))
+            ets.push(
+              twitterQuery.getThreadedConversation(
+                _showMoreTweetsFromConversation
+              )
+            )
           }
 
           return ets
@@ -55,7 +61,9 @@ class ConversationStream extends Readable {
         return Promise.all(extendedTweets).then(flatten)
       })
       .then(tweets => {
-        const lastReadTweetId = tweets.length ? tweets[tweets.length - 1].id : undefined
+        const lastReadTweetId = tweets.length
+          ? tweets[tweets.length - 1].id
+          : undefined
         if (this._lastReadTweetId === lastReadTweetId) {
           this.push(null)
           this.isLocked = false
@@ -90,7 +98,11 @@ class ConversationStream extends Readable {
         }
 
         if (tweets.minPosition) {
-          debug(`ConversationStream sets the last min position to ${tweets.minPosition}`)
+          debug(
+            `ConversationStream sets the last min position to ${
+              tweets.minPosition
+            }`
+          )
           this._lastMinPosition = tweets.minPosition
         }
 

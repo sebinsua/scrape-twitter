@@ -15,7 +15,9 @@ class LikeStream extends Readable {
     this.username = username
     this.env = env
     this.count = count
-    debug(`LikeStream for ${this.username} created with `, { count: this.count })
+    debug(`LikeStream for ${this.username} created with `, {
+      count: this.count
+    })
   }
 
   _read () {
@@ -37,55 +39,66 @@ class LikeStream extends Readable {
     this.isLocked = true
     debug('LikeStream is now locked')
 
-    debug(`LikeStream reads timeline${this._lastReadTweetId ? ` from tweet ${this._lastReadTweetId} onwards` : ''}`)
+    debug(
+      `LikeStream reads timeline${
+        this._lastReadTweetId
+          ? ` from tweet ${this._lastReadTweetId} onwards`
+          : ''
+      }`
+    )
 
-    login(this.env).then(() =>
-      twitterQuery.getUserLikes(this.username, this._lastReadTweetId)
-        .then(tweets => {
-          let lastReadTweetId
-          for (const tweet of tweets) {
-            lastReadTweetId = tweet.id
+    login(this.env)
+      .then(() =>
+        twitterQuery
+          .getUserLikes(this.username, this._lastReadTweetId)
+          .then(tweets => {
+            let lastReadTweetId
+            for (const tweet of tweets) {
+              lastReadTweetId = tweet.id
 
-            this.push(tweet)
-            this._numberOfTweetsRead++
-            if (this._numberOfTweetsRead >= this.count) {
-              debug('LikeStream has read up to the max count')
-              break
+              this.push(tweet)
+              this._numberOfTweetsRead++
+              if (this._numberOfTweetsRead >= this.count) {
+                debug('LikeStream has read up to the max count')
+                break
+              }
             }
-          }
 
-          // We have to check to see if there are more tweets, by seeing if the
-          // last tweet id has been repeated or not.
-          const hasZeroTweets = lastReadTweetId === undefined
-          const hasDifferentLastTweet = this._lastReadTweetId !== lastReadTweetId
-          const hasMoreTweets = !hasZeroTweets && hasDifferentLastTweet
-          if (hasMoreTweets === false) {
-            debug('LikeStream has no more tweets:', {
-              hasZeroTweets,
-              hasDifferentLastTweet,
-              hasMoreTweets
-            })
-            this.push(null)
-          } else {
-            debug('LikeStream has more tweets:', {
-              hasZeroTweets,
-              hasDifferentLastTweet,
-              hasMoreTweets
-            })
-          }
+            // We have to check to see if there are more tweets, by seeing if the
+            // last tweet id has been repeated or not.
+            const hasZeroTweets = lastReadTweetId === undefined
+            const hasDifferentLastTweet =
+              this._lastReadTweetId !== lastReadTweetId
+            const hasMoreTweets = !hasZeroTweets && hasDifferentLastTweet
+            if (hasMoreTweets === false) {
+              debug('LikeStream has no more tweets:', {
+                hasZeroTweets,
+                hasDifferentLastTweet,
+                hasMoreTweets
+              })
+              this.push(null)
+            } else {
+              debug('LikeStream has more tweets:', {
+                hasZeroTweets,
+                hasDifferentLastTweet,
+                hasMoreTweets
+              })
+            }
 
-          debug(`LikeStream sets the last tweet to ${lastReadTweetId}`)
-          this._lastReadTweetId = lastReadTweetId
+            debug(`LikeStream sets the last tweet to ${lastReadTweetId}`)
+            this._lastReadTweetId = lastReadTweetId
 
-          this.isLocked = false
-          debug('LikeStream is now unlocked')
+            this.isLocked = false
+            debug('LikeStream is now unlocked')
 
-          if (hasMoreTweets) {
-            debug('LikeStream has more tweets so calls this._read')
-            this._read()
-          }
-        }).catch(err => this.emit('error', err))
-    ).catch(err => this.emit('error', err))
+            if (hasMoreTweets) {
+              debug('LikeStream has more tweets so calls this._read')
+              this._read()
+            }
+          })
+          .catch(err => this.emit('error', err))
+      )
+      .catch(err => this.emit('error', err))
   }
 }
 
