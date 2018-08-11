@@ -70,7 +70,7 @@ const loginWithAuthToken = (
   TWITTER_KDT
 ) => {
   return authToken => {
-    const formData = `session%5Busername_or_email%5D=${TWITTER_USERNAME}&session%5Bpassword%5D=${TWITTER_PASSWORD}&remember_me=1&return_to_ssl=true&scribe_log=&redirect_after_login=%2F&authenticity_token=${authToken}`
+    const formData = `session%5Busername_or_email%5D=${TWITTER_USERNAME}&session%5Bpassword%5D=${encodeURIComponent(TWITTER_PASSWORD)}&remember_me=1&return_to_ssl=true&scribe_log=&redirect_after_login=%2F&authenticity_token=${authToken}`
     return fetch('https://twitter.com/sessions', {
       method: 'POST',
       redirect: 'manual',
