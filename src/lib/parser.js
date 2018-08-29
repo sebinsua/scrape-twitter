@@ -246,25 +246,25 @@ const toTwitterProfile = ({ $ }) => {
     $nav
       .find('.ProfileNav-item--tweets .ProfileNav-value')
       .first()
-      .text()
+      .attr('data-count')
   )
   const followingCount = toNumber(
     $nav
       .find('.ProfileNav-item--following .ProfileNav-value')
       .first()
-      .text()
+      .attr('data-count')
   )
   const followerCount = toNumber(
     $nav
       .find('.ProfileNav-item--followers .ProfileNav-value')
       .first()
-      .text()
+      .attr('data-count')
   )
   const likeCount = toNumber(
     $nav
       .find('.ProfileNav-item--favorites .ProfileNav-value')
       .first()
-      .text()
+      .attr('data-count')
   )
 
   const userMentions = parseUsernamesFromText(bio)
