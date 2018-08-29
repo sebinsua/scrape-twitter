@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.11.1"></a>
+## [0.11.1](https://github.com/sebinsua/scrape-twitter/compare/v0.11.0...v0.11.1) (2018-08-29)
+
+
+### Bug Fixes
+
+* **login:** url-encode password to send correct request's body ([#19](https://github.com/sebinsua/scrape-twitter/issues/19)) ([c7535ee](https://github.com/sebinsua/scrape-twitter/commit/c7535ee))
+* update parser to use data attribute for counts ([#16](https://github.com/sebinsua/scrape-twitter/issues/16)) ([00dda31](https://github.com/sebinsua/scrape-twitter/commit/00dda31))
+
+
+
 <a name="0.11.0"></a>
 # [0.11.0](https://github.com/sebinsua/scrape-twitter/compare/v0.10.0...v0.11.0) (2018-02-03)
 
