@@ -100,7 +100,7 @@ const loginWithAuthToken = (
   }
 }
 
-function login(env = {}) {
+function login (env = {}) {
   const { TWITTER_USERNAME, TWITTER_PASSWORD, TWITTER_KDT } = env
   return setCookieWithKdt(TWITTER_KDT)
     .then(getAuthToken)

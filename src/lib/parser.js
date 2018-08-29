@@ -211,12 +211,12 @@ const fromJoinDateToIso8601 = joinDateString => {
 }
 
 const toTwitterProfile = ({ $ }) => {
-  const $avatar = $('.ProfileAvatar')
+  const $canopy = $('.ProfileCanopy')
   const $header = $('.ProfileHeaderCard')
   const $nav = $('.ProfileNav')
 
-  const profileImage = $avatar.find('.ProfileAvatar-image').attr('src')
-  const backgroundImage = $avatar
+  const profileImage = $canopy.find('.ProfileAvatar-image').attr('src')
+  const backgroundImage = $canopy
     .find('.ProfileCanopy-headerBg img')
     .attr('src')
   const screenName = $header

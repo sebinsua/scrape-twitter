@@ -224,7 +224,8 @@ test('getUserProfile() should return my account', () => {
     name: 'Seb Insua',
     profileImage:
       'https://pbs.twimg.com/profile_images/643854442362720256/nSrJUpet_400x400.png',
-    bio: 'musing → @nouswaves',
+    backgroundImage: 'https://pbs.twimg.com/profile_banners/3653733377/1442341850/1500x500',
+    bio: 'Liberal. See also → @nouswaves',
     location: 'London, England',
     url: 'http://sebinsua.com',
     joinDate: '2015-09-01T00:00:00.000Z',
@@ -233,7 +234,7 @@ test('getUserProfile() should return my account', () => {
     userMentions: [
       {
         screenName: 'nouswaves',
-        indices: [9, 19]
+        indices: [20, 30]
       }
     ],
     followingCount: expect.any(Number),
