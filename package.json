@@ -11,7 +11,8 @@
     "scrape-twitter-list": "./bin/scrape-twitter-list.js",
     "scrape-twitter-connections": "./bin/scrape-twitter-connections.js",
     "scrape-twitter-conversation": "./bin/scrape-twitter-conversation.js",
-    "scrape-twitter-search": "./bin/scrape-twitter-search.js"
+    "scrape-twitter-search": "./bin/scrape-twitter-search.js",
+    "scrape-twitter-similars": "./bin/scrape-twitter-similars.js"
   },
   "main": "dist",
   "engines": {

@@ -115,6 +115,14 @@ const getUserProfile = username => {
     .then(parser.toTwitterProfile)
 }
 
+const getSimilarProfiles = username => {
+  const url = `https://twitter.com/${username}`
+  return query
+    .get(url)
+    .then(toCheerio)
+    .then(parser.similarProfiles)
+}
+
 const queryTweets = (q, type, maxPosition) => {
   const url = 'https://twitter.com/i/search/timeline'
   const options = {
@@ -133,6 +141,7 @@ const queryTweets = (q, type, maxPosition) => {
 
 module.exports = {
   getUserProfile,
+  getSimilarProfiles,
   getUserTimeline,
   getUserMediaTimeline,
   getUserLikes,

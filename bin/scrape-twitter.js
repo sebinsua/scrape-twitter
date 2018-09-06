@@ -27,6 +27,7 @@ command.catch(() => {
       conversation  Get a particular conversation.
       list          Get the timeline of a particular list.
       search        Query Twitter for matching tweets.
+      similars      Query Twitter profile for similar users.
   `)
   return true
 })
