@@ -57,7 +57,10 @@ const query = (url, options, fetcher = fetch) => {
   debug('query on resource:', resource)
   return fetcher(resource, {
     agent: https.globalAgent,
-    timeout: process.env.SCRAPE_TWITTER_TIMEOUT || DEFAULT_TIMEOUT
+    timeout: process.env.SCRAPE_TWITTER_TIMEOUT || DEFAULT_TIMEOUT,
+    headers: {
+      Referer: resource
+    }
   })
     .then(checkStatus)
     .then(toJson)

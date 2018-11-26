@@ -33,6 +33,11 @@ const setCookieWithKdt = kdt => {
   }
 }
 
+const setAppShellCookie = () => {
+  const cookie = 'app_shell_visited=1; Path=/; Domain=.twitter.com; Secure; HTTPOnly'
+  return setCookie(cookie, 'https://twitter.com/')
+}
+
 const getAuthToken = () => {
   return fetch('https://twitter.com', {
     timeout: process.env.SCRAPE_TWITTER_TIMEOUT || DEFAULT_TIMEOUT
@@ -105,6 +110,7 @@ function login (env = {}) {
   return setCookieWithKdt(TWITTER_KDT)
     .then(getAuthToken)
     .then(loginWithAuthToken(TWITTER_USERNAME, TWITTER_PASSWORD, TWITTER_KDT))
+    .then(setAppShellCookie)
 }
 
 module.exports = login
