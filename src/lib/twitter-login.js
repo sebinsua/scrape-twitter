@@ -11,6 +11,7 @@ const SCRAPE_TWITTER_CONFIG = require('./cli-utils').SCRAPE_TWITTER_CONFIG
 
 const jar = new tough.CookieJar()
 const setCookie = denodeify(jar.setCookie.bind(jar))
+const getCookiesSync = denodeify(jar.getCookiesSync.bind(jar))
 
 const fetch = fetchCookieDecorator(isomorphicFetch, jar)
 
@@ -105,12 +106,23 @@ const loginWithAuthToken = (
   }
 }
 
+const isLoggedIn = () => {
+  return getCookiesSync('https://twitter.com/', { sort: false })
+    .then((cookies) => !!cookies.length)
+}
+
 function login (env = {}) {
-  const { TWITTER_USERNAME, TWITTER_PASSWORD, TWITTER_KDT } = env
-  return setCookieWithKdt(TWITTER_KDT)
-    .then(getAuthToken)
-    .then(loginWithAuthToken(TWITTER_USERNAME, TWITTER_PASSWORD, TWITTER_KDT))
-    .then(setAppShellCookie)
+  return isLoggedIn()
+    .then(loggedIn => {
+      if (loggedIn) {
+        return
+      }
+      const { TWITTER_USERNAME, TWITTER_PASSWORD, TWITTER_KDT } = env
+      return setCookieWithKdt(TWITTER_KDT)
+        .then(getAuthToken)
+        .then(loginWithAuthToken(TWITTER_USERNAME, TWITTER_PASSWORD, TWITTER_KDT))
+        .then(setAppShellCookie)
+    })
 }
 
 module.exports = login
