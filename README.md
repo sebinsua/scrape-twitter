@@ -1,6 +1,10 @@
 # `scrape-twitter` [![Build Status](https://travis-ci.org/sebinsua/scrape-twitter.png)](https://travis-ci.org/sebinsua/scrape-twitter) [![npm version](https://badge.fury.io/js/scrape-twitter.svg)](https://npmjs.org/package/scrape-twitter)
 > 🐦 Access Twitter data without an API key
 
+**DEPRECATED**: The next version of Twitter auto-generates all of the class names and therefore is going to be much more difficult to screen scrape. I might come up with a better solution...
+
+___
+
 This module provides command line interfaces to scrape: profiles, timelines, connections, likes, search and conversations.
 
 It also exposes both streams and a promise returning function to help accessing Twitter in your own applications.
