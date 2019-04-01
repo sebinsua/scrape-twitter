@@ -294,6 +294,26 @@ const toTwitterProfile = ({ $ }) => {
   return userProfile
 }
 
+const similarProfiles = ({ $ }) => {
+  const $sidebar = $('.ProfileSidebar');
+
+  const recommended = $sidebar.find('.js-recommend-link')
+    .toArray()
+    .map(item => {
+      console.dir(item)
+      console.log(item.find(".username b").text())
+      return item.find(".username b").text()
+    })
+
+  const similarProfiles = {
+    recommended
+  }
+
+  debug('similar users found:', similarProfiles)
+
+  return similarProfiles
+}
+
 const parseConnection = ($, connectionElement) => {
   const $c = $(connectionElement)
 
@@ -426,6 +446,7 @@ const toThreadedTweets = id => ({ $, _minPosition }) => {
   return tweets
 }
 
+module.exports.similarProfiles = similarProfiles
 module.exports.toTwitterProfile = toTwitterProfile
 module.exports.toConnections = toConnections
 module.exports.toTweets = toTweets
